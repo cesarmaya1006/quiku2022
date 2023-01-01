@@ -10,7 +10,7 @@
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
-    Parametros - Categorías
+    Parametros - Productos
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
@@ -20,22 +20,22 @@
         <div class="card-header">
             <div class="row mb-3">
                 <div class="col-12 col-md-6 col-lg-6 text-md-left text-lg-left pl-2">
-                    <h5>Nueva Categoría</h5>
+                    <h5>Nuevo Producto</h5>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 text-md-right text-lg-right pl-2 pr-md-5 pr-lg-5">
-                    <a href="{{ route('admin-categoria-index') }}" class="btn btn-success btn-sm text-center pl-3 pr-3"
+                    <a href="{{ route('admin-producto-index') }}" class="btn btn-success btn-sm text-center pl-3 pr-3"
                         style="font-size: 0.9em;"><i class="fas fa-reply mr-2"></i> Volver</a>
                 </div>
             </div>
             <hr>
             <div class="row">
                 <div class="col-12">
-                    <form action="{{ route('admin-categoria-guardar') }}" class="form-horizontal row" method="POST"
+                    <form action="{{ route('admin-producto-guardar') }}" class="form-horizontal row" method="POST"
                         autocomplete="off" enctype="multipart/form-data">
                         @csrf
                         @method('post')
                         <div class="card-body">
-                            @include('intranet.parametros.categorias.form')
+                            @include('intranet.parametros.productos.form')
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">

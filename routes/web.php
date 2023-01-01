@@ -19,6 +19,8 @@ use App\Http\Controllers\Intranet\Admin\PermisoRolController;
 use App\Http\Controllers\Intranet\Funcionarios\PQRController;
 use App\Http\Controllers\Intranet\Usuarios\ClienteController;
 use App\Http\Controllers\Intranet\Admin\IntranetPageCotroller;
+use App\Http\Controllers\Intranet\Admin\MarcaController;
+use App\Http\Controllers\Intranet\Admin\ProductoController;
 use App\Http\Controllers\Intranet\Empresas\FuncionarioFController;
 use App\Http\Controllers\Intranet\Empresas\WikuController;
 use App\Http\Controllers\Intranet\Funcionarios\FuncionarioController;
@@ -205,12 +207,25 @@ Route::group(['middleware' => 'auth'], function () {
         });
         // ------------------------------------------------------------------------------------
         Route::group(['middleware' => 'administrador'], function () {
-            // Rutas Administrador
+            // Rutas Categorias
             Route::get('categorias-index', [CategoriaController::class, 'index'])->name('admin-categoria-index');
             Route::get('categorias-crear', [CategoriaController::class, 'crear'])->name('admin-categoria-crear');
             Route::get('categorias-editar/{id}', [CategoriaController::class, 'editar'])->name('admin-categoria-editar');
             Route::post('categorias-guardar', [CategoriaController::class, 'guardar'])->name('admin-categoria-guardar');
             Route::put('categorias-actualizar/{id}', [CategoriaController::class, 'actualizar'])->name('admin-categoria-actualizar');
+            // Rutas Productos
+            Route::get('productos-index', [ProductoController::class, 'index'])->name('admin-producto-index');
+            Route::get('productos-crear', [ProductoController::class, 'crear'])->name('admin-producto-crear');
+            Route::get('productos-editar/{id}', [ProductoController::class, 'editar'])->name('admin-producto-editar');
+            Route::post('productos-guardar', [ProductoController::class, 'guardar'])->name('admin-producto-guardar');
+            Route::put('productos-actualizar/{id}', [ProductoController::class, 'actualizar'])->name('admin-producto-actualizar');
+            // Rutas Productos
+            Route::get('marcas-index', [MarcaController::class, 'index'])->name('admin-marca-index');
+            Route::get('marcas-crear', [MarcaController::class, 'crear'])->name('admin-marca-crear');
+            Route::get('marcas-editar/{id}', [MarcaController::class, 'editar'])->name('admin-marca-editar');
+            Route::post('marcas-guardar', [MarcaController::class, 'guardar'])->name('admin-marca-guardar');
+            Route::put('marcas-actualizar/{id}', [MarcaController::class, 'actualizar'])->name('admin-marca-actualizar');
+
         });
         Route::group(['prefix' => 'funcionario'], function () {
             // Rutas parametrizacion

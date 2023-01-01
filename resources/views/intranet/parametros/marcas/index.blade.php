@@ -10,7 +10,7 @@
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
-    Parametros - Productos
+    Parametros - Marcas
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
@@ -20,11 +20,11 @@
         <div class="card-header">
             <div class="row mb-3">
                 <div class="col-12 col-md-6 col-lg-6 text-md-left text-lg-left pl-2">
-                    <h5>listado de Productos</h5>
+                    <h5>listado de Marcas</h5>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 text-md-right text-lg-right pl-2 pr-md-5 pr-lg-5">
-                    <a href="{{ route('admin-producto-crear') }}" class="btn btn-success btn-sm text-center pl-3 pr-3"
-                        style="font-size: 0.9em;"><i class="fas fa-plus-circle mr-2"></i> Nuevo Producto</a>
+                    <a href="{{ route('admin-marca-crear') }}" class="btn btn-success btn-sm text-center pl-3 pr-3"
+                        style="font-size: 0.9em;"><i class="fas fa-plus-circle mr-2"></i> Nueva Marca</a>
                 </div>
             </div>
             <hr>
@@ -35,16 +35,18 @@
                             <tr>
                                 <th class="text-center">Categoría</th>
                                 <th class="text-center">Producto</th>
+                                <th class="text-center">Marca</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($productos as $producto)
+                            @foreach ($marcas as $marca)
                                 <tr>
-                                    <td class="text-center">{{ $producto->categoria->categoria }}</td>
-                                    <td class="text-center">{{ $producto->producto }}</td>
+                                    <td class="text-center">{{ $marca->producto->categoria->categoria }}</td>
+                                    <td class="text-center">{{ $marca->producto->producto }}</td>
+                                    <td class="text-center">{{ $marca->marca }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('admin-producto-editar', ['id' => $producto->id]) }}"
+                                        <a href="{{ route('admin-producto-editar', ['id' => $marca->id]) }}"
                                             class="btn-accion-tabla tooltipsC text-info"> <i class="fa fa-edit"
                                                 aria-hidden="true"></i></a>
                                     </td>
