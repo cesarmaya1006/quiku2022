@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Productos\Categoria;
 use App\Models\Productos\Marca;
 use App\Models\Productos\Producto;
+use App\Models\Productos\Referencia;
 use Illuminate\Http\Request;
 
-class MarcaController extends Controller
+class ReferenciaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +18,8 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        $marcas = Marca::get();
-        return view('intranet.parametros.marcas.index', compact('marcas'));
+        $referencias = Referencia::get();
+        return view('intranet.parametros.referencias.index', compact('referencias'));
     }
 
     /**
@@ -29,7 +30,7 @@ class MarcaController extends Controller
     public function crear()
     {
         $categorias = Categoria::get();
-        return view('intranet.parametros.marcas.crear', compact('categorias'));
+        return view('intranet.parametros.referencias.crear', compact('categorias'));
     }
 
     /**
@@ -40,8 +41,8 @@ class MarcaController extends Controller
      */
     public function guardar(Request $request)
     {
-        Marca::create($request->all());
-        return redirect('admin/marcas-index')->with('mensaje', 'Marca creada con exito');
+        Referencia::create($request->all());
+        return redirect('admin/referencias-index')->with('mensaje', 'Reférencia creada con exito');
     }
     /**
      * Display the specified resource.
@@ -63,9 +64,10 @@ class MarcaController extends Controller
     public function editar($id)
     {
         $categorias = Categoria::get();
-        $marca = Marca::findOrFail($id);
-        $productos = Producto::where('categoria_id',$marca->producto->categoria_id)->get();
-        return view('intranet.parametros.marcas.editar', compact('marca','productos','categorias'));
+        $referencia = Referencia::findOrFail($id);
+        $marcas = Marca::where('producto_id',$referencia->marca->producto_id)->get();
+        $productos = Producto::where('categoria_id',$referencia->marca->producto->categoria_id)->get();
+        return view('intranet.parametros.referencias.editar', compact('referencia','productos','categorias','marcas'));
     }
 
     /**
@@ -77,8 +79,8 @@ class MarcaController extends Controller
      */
     public function actualizar(Request $request, $id)
     {
-        Marca::findOrFail($id)->update($request->all());
-        return redirect('admin/marcas-index')->with('mensaje', 'Marca actualizada con exito');
+        Referencia::findOrFail($id)->update($request->all());
+        return redirect('admin/referencias-index')->with('mensaje', 'Referencia actualizada con exito');
     }
 
     /**

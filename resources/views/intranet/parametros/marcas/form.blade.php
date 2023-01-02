@@ -9,8 +9,8 @@
     <small id="helpId" class="form-text text-muted">Producto</small>
 </div>
 <div class="col-12 col-md-6 form-group">
-    <label for="producto_id">Producto</label>
-    <select class="form-control form-control-sm" name="producto_id" id="producto_id">
+    <label class="requerido" for="producto_id">Producto</label>
+    <select class="form-control form-control-sm" name="producto_id" id="producto_id" required>
         @if (isset($marca))
         @foreach ($productos as $producto)
             <option value="{{ $producto->id }}" {{ isset($marca) ? ($producto->id == $marca->producto_id ? 'selected' : '') : '' }}>
@@ -26,7 +26,7 @@
     <small id="helpId" class="form-text text-muted">Producto</small>
 </div>
 <div class="col-12 col-md-6 form-group">
-    <label for="marca">Marca</label>
+    <label class="requerido" for="marca">Marca</label>
     <input type="text" class="form-control form-control-sm" name="marca" id="marca" aria-describedby="helpId"
         value="{{ old('marca', $marca->marca ?? '') }}" placeholder="Nombre de la Marca" required>
     <small id="helpId" class="form-text text-muted">Marca</small>

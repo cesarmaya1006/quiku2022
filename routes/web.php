@@ -21,6 +21,7 @@ use App\Http\Controllers\Intranet\Usuarios\ClienteController;
 use App\Http\Controllers\Intranet\Admin\IntranetPageCotroller;
 use App\Http\Controllers\Intranet\Admin\MarcaController;
 use App\Http\Controllers\Intranet\Admin\ProductoController;
+use App\Http\Controllers\Intranet\Admin\ReferenciaController;
 use App\Http\Controllers\Intranet\Empresas\FuncionarioFController;
 use App\Http\Controllers\Intranet\Empresas\WikuController;
 use App\Http\Controllers\Intranet\Funcionarios\FuncionarioController;
@@ -219,12 +220,18 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('productos-editar/{id}', [ProductoController::class, 'editar'])->name('admin-producto-editar');
             Route::post('productos-guardar', [ProductoController::class, 'guardar'])->name('admin-producto-guardar');
             Route::put('productos-actualizar/{id}', [ProductoController::class, 'actualizar'])->name('admin-producto-actualizar');
-            // Rutas Productos
+            // Rutas Marcas
             Route::get('marcas-index', [MarcaController::class, 'index'])->name('admin-marca-index');
             Route::get('marcas-crear', [MarcaController::class, 'crear'])->name('admin-marca-crear');
             Route::get('marcas-editar/{id}', [MarcaController::class, 'editar'])->name('admin-marca-editar');
             Route::post('marcas-guardar', [MarcaController::class, 'guardar'])->name('admin-marca-guardar');
             Route::put('marcas-actualizar/{id}', [MarcaController::class, 'actualizar'])->name('admin-marca-actualizar');
+            // Rutas Referencias
+            Route::get('referencias-index', [ReferenciaController::class, 'index'])->name('admin-referencia-index');
+            Route::get('referencias-crear', [ReferenciaController::class, 'crear'])->name('admin-referencia-crear');
+            Route::get('referencias-editar/{id}', [ReferenciaController::class, 'editar'])->name('admin-referencia-editar');
+            Route::post('referencias-guardar', [ReferenciaController::class, 'guardar'])->name('admin-referencia-guardar');
+            Route::put('referencias-actualizar/{id}', [ReferenciaController::class, 'actualizar'])->name('admin-referencia-actualizar');
 
         });
         Route::group(['prefix' => 'funcionario'], function () {
