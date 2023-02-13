@@ -63,12 +63,12 @@ class PQRController extends Controller
         $supervisadas = AsignacionTarea::where('empleado_id', session('id_usuario'))->where('tareas_id', 1)->where('estado_id', '<', 11)->get();
         $proyectadas = AsignacionTarea::where('empleado_id', session('id_usuario'))->where('tareas_id', 2)->where('estado_id', '<', 11)->get();
         $revisiones = AsignacionTarea::where('empleado_id', session('id_usuario'))->where('tareas_id', 3)->where('estado_id', '<', 11)->get();
-        $aprobadas = AsignacionTarea::where('empleado_id', session('id_usuario'))->where('tareas_id', 4)->where('estado_id', '<', 11)->get();        
+        $aprobadas = AsignacionTarea::where('empleado_id', session('id_usuario'))->where('tareas_id', 4)->where('estado_id', '<', 11)->get();
         $activasAprobar = [];
         foreach ($aprobadas as $key => $value) {
             $validacion = AsignacionTarea::where('pqr_id', $value->pqr_id)->where('tareas_id', 2)->where('estado_id', '=', 11)->get();
             if (sizeOf($validacion)) $activasAprobar[] = $value;
-        }       
+        }
         $radicadas = AsignacionTarea::where('tareas_id', 5)->where('estado_id', '<', 11)->get();
         $activasRadicar = [];
         foreach ($radicadas as $key => $value) {

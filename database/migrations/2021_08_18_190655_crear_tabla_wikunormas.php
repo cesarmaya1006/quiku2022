@@ -29,6 +29,7 @@ class CrearTablaWikunormas extends Migration
             $table->unsignedBigInteger('wikutemaespecifico_id')->nullable();
             $table->foreign('wikutemaespecifico_id', 'fk_temaespecifico_norma')->references('id')->on('wikutemaespecifico')->onDelete('restrict')->onUpdate('restrict');
             $table->bigInteger('destacado')->default(0);
+            $table->bigInteger('estado')->default(1);
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

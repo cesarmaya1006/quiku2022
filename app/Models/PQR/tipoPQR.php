@@ -2,7 +2,9 @@
 
 namespace App\Models\PQR;
 
+use App\Models\Admin\WikuArgumento;
 use App\Models\Admin\WikuAsociacion;
+use App\Models\Admin\WikuAsociacionArg;
 use App\Models\Admin\WikuNorma;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -32,5 +34,15 @@ class tipoPQR extends Model
     public function asociacionnorma()
     {
         return $this->belongsToMany(WikuNorma::class, 'wikuasociaciones');
+    }
+    //----------------------------------------------------------------------------------
+    public function asociacion_argumentos()
+    {
+        return $this->hasMany(WikuAsociacionArg::class, 'tipo_p_q_r_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function asociacionargumento()
+    {
+        return $this->belongsToMany(WikuArgumento::class, 'wikuargasociaciones');
     }
 }

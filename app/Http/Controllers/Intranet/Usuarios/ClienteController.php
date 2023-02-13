@@ -136,8 +136,8 @@ class ClienteController extends Controller
             $insert = false;
             $ultimoInsert = PQR::findOrFail($validarInsert[$validarInsert->count() - 1]->id);
             $fechaActual = strtotime(date("Y-m-d H:i:s"));
-            $fechaUltimoInsert = strtotime($ultimoInsert['created_at']); 
-            $fechaUltimoInsert = strtotime ('+ 2 minute' , $fechaUltimoInsert); 
+            $fechaUltimoInsert = strtotime($ultimoInsert['created_at']);
+            $fechaUltimoInsert = strtotime ('+ 2 minute' , $fechaUltimoInsert);
             if($fechaUltimoInsert < $fechaActual){
                 $insert = true;
             }
@@ -158,7 +158,7 @@ class ClienteController extends Controller
             $pqr = PQR::create($nuevaPQR);
 
             $pqr = PQR::findOrFail($pqr->id);
-    
+
             return redirect('/usuario/generarPQR-motivos/' . $pqr->id);
         }
     }
@@ -1294,7 +1294,7 @@ class ClienteController extends Controller
             $empleado_final = min($empleados_sel_max);
             $pqr_act['empleado_id'] = $empleado_final['id'];
             $pqr->update($pqr_act);
-        } 
+        }
         // **************************************************************************************************** */
 
     }

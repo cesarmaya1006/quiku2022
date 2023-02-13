@@ -809,6 +809,8 @@
                                                                     <hr>
                                                                     <div class="row justify-content-around coleccionrespuesta"
                                                                         id="coleccionrespuesta">
+                                                                        @include('intranet.funcionarios.pqr.modal')
+                                                                        <!--
                                                                         <div class="col-md-6  d-none">
                                                                             <div
                                                                                 class="card card-primary collapsed-card card-mini-sombra">
@@ -881,6 +883,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                                    -->
                                                                     </div>
                                                                 </div>
                                                             </div>
