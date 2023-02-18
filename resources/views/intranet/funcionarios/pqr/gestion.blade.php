@@ -1235,6 +1235,7 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="pqr_id" name="pqr_id" value="{{ $pqr->id}}" data_url="{{ route('funcionario-gestionar-asignacion-colaboracion_wiku' , ['id' => $pqr->id])}}">
 
 @endsection
 <!-- ************************************************************* -->
