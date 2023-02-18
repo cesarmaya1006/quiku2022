@@ -110,6 +110,21 @@ class PQRController extends Controller
         return view('intranet.funcionarios.pqr.gestion', compact('pqr', 'estadoPrioridad', 'estados', 'areas', 'fuentes', 'tipos_pqr', 'categorias', 'servicios'));
     }
 
+    public function gestionar_asignacion_colaboracion_wiku(Request $request, $id){
+
+        if ($request->ajax()) {
+            $pqr= PQR::findOrFail($_GET['id']);
+            $wikuArgumentos = $pqr->tipoPqr->asociacionargumento;
+            $wikuNormas = $pqr->tipoPqr->asociacionnorma;
+            $wikuArgumentos = $pqr->tipoPqr->asociacionargumento;
+            $wikuJurisprudencias = $pqr->tipoPqr->asociacionargumento;
+
+            return response()->json(['normas' => $wikuNormas, 'argumentos' => $wikuArgumentos, 'jurisprudencias' => $wikuJurisprudencias, 'doctrinas' => $wikuDoctrinas]);
+        } else {
+            abort(404);
+        }
+    }
+
     public function gestionar_guardar_usuario(Request $request)
     {
         $contadorAnexos = 0;
