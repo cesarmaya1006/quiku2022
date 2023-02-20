@@ -45,6 +45,10 @@ use App\Models\PQR\HistorialAsignacion;
 use App\Models\PQR\AsignacionParticular;
 use App\Http\Controllers\Fechas\FechasController;
 use App\Models\Admin\Usuario;
+use App\Models\Admin\WikuArgumento;
+use App\Models\Admin\WikuDoctrina;
+use App\Models\Admin\WikuJurisprudencia;
+use App\Models\Admin\WikuNorma;
 use App\Models\PQR\ResuelveRecurso;
 
 class PQRController extends Controller
@@ -113,13 +117,34 @@ class PQRController extends Controller
     public function gestionar_asignacion_colaboracion_wiku(Request $request, $id){
 
         if ($request->ajax()) {
-            $pqr= PQR::findOrFail($_GET['id']);
-            $wikuArgumentos = $pqr->tipoPqr->asociacionargumento;
-            $wikuNormas = $pqr->tipoPqr->asociacionnorma;
-            $wikuArgumentos = $pqr->tipoPqr->asociacionargumento;
-            $wikuJurisprudencias = $pqr->tipoPqr->asociacionargumento;
+            $pqr= PQR::findOrFail($id);
+            $tipo_pqr_id = $pqr->tipo_pqr_id;
+            $wikuNormas = WikuNorma::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area', 'documento')->whereHas('tipopqr', function ($q) use ($tipo_pqr_id) {
+                $q->where('tipo_p_q_r_id', $tipo_pqr_id);
+            })->get();
+            $wikuArgumentos = WikuArgumento::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area')->whereHas('tipopqr', function ($q) use ($tipo_pqr_id) {
+                $q->where('tipo_p_q_r_id', $tipo_pqr_id);
+            })->get();
+            /*$wikuJurisprudencias = WikuJurisprudencia::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area')->whereHas('palabras', function ($q) use ($ids) {
+                $q->whereIn('wiku_palabras_id', $ids);
+            })->get();
+            $wikuDoctrinas = WikuDoctrina::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area')->whereHas('palabras', function ($q) use ($ids) {
+                $q->whereIn('wiku_palabras_id', $ids);
+            })->get();
+            */
 
-            return response()->json(['normas' => $wikuNormas, 'argumentos' => $wikuArgumentos, 'jurisprudencias' => $wikuJurisprudencias, 'doctrinas' => $wikuDoctrinas]);
+
+
+
+            //$wikuArgumentos = $pqr->tipoPqr->asociacionargumento;
+            $wikuNormas = $pqr->tipoPqr->asociacionnorma;
+            //$wikuDoctrinas = $pqr->tipoPqr->asociacionargumento;
+            //$wikuJurisprudencias = $pqr->tipoPqr->asociacionargumento;
+
+            //return response()->json(['normas' => $wikuNormas, 'argumentos' => $wikuArgumentos, 'jurisprudencias' => $wikuJurisprudencias, 'doctrinas' => $wikuDoctrinas]);
+
+            return response()->json(['normas' => $wikuNormas, 'argumentos' => $wikuArgumentos]);
+
         } else {
             abort(404);
         }
