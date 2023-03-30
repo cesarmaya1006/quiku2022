@@ -77,6 +77,7 @@
                                                     <th class="text-center">Área de conocimiento</th>
                                                     <th class="text-center">Tema</th>
                                                     <th class="text-center">Tema Específico</th>
+                                                    <th class="text-center">Cambios</th>
                                                     <th>Opciones</th>
                                                 </tr>
                                             </thead>
@@ -113,7 +114,22 @@
                                                         <td style="min-width:150px;">
                                                             {{ $argumento->temaespecifico->tema }}
                                                         </td>
-                                                        <td class="d-flex">
+                                                        <td class="text-center 
+                                                        @if ($argumento->cambios->where('estado',1)->count()>0)
+                                                            @if ($argumento->cambios->where('wikuargumento_id',$argumento->id)->last()->estado==1)
+                                                            text-info
+                                                            @endif
+                                                        @endif
+                                                        ">
+                                                        @if ($argumento->cambios->where('estado',1)->count()>0)
+                                                            @if ($argumento->cambios->where('wikuargumento_id',$argumento->id)->last()->estado==1)
+                                                            <a href="{{ route('wiku_argumentos_cambios', ['id' => $argumento->id]) }}">Cambio Solicitado</a>
+                                                            @endif
+                                                        @else
+                                                        ---
+                                                        @endif
+                                                        </td>
+                                                        <td>
                                                             <a href="{{ route('wiku_argumento-editar', ['id' => $argumento->id]) }}"
                                                                 class="btn-accion-tabla tooltipsC text-info"
                                                                 title="Editar"><i class="fa fa-edit"

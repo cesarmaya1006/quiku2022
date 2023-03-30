@@ -887,6 +887,9 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <!--<div class="modal-footer">
+                                                                <button class="btn btn-success btn-xs pl-4 pr-4 float-end">Solicitar Guadar</button>
+                                                              </div> -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -909,6 +912,9 @@
                                                             value="{{ $peticion->respuesta->respuesta }}"
                                                             data_url="{{ route('historial_peticion_guardar') }}">
                                                     @endif
+                                                </div>
+                                                <div class="col-12 mb-5">
+                                                    <a href="{{route('gest_wiku_empleado', ['id' => $pqr->id])}}" class="btn btn-warning btn-xs btn-sombra pl-4 pr-4">Solicitar Editar/Guadar Wiku</a>
                                                 </div>
                                                 @if ($peticion->estadopeticion->estado != 100 && !sizeOf($peticion->recursos))
                                                     <div class="col-12 anexosConsulta">

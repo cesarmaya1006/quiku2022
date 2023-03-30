@@ -71,7 +71,7 @@
                                 </div>
                             @else
                                 <div class="col-12 text-center">
-                                    <p><strong>Sin criterios jurídicos</strong></p>
+                                    <p><strong>Sin criterios jurídicosss</strong></p>
                                 </div>
                             @endif
                         </div>

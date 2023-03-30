@@ -185,10 +185,7 @@ class PQRController extends Controller
         );
     }
 
-    public function gestionar_asignacion_colaboracion_wiku(
-        Request $request,
-        $id
-    ) {
+    public function gestionar_asignacion_colaboracion_wiku(Request $request,$id) {
         if ($request->ajax()) {
             $pqr = PQR::findOrFail($id);
             $peticiones = $pqr->peticiones;

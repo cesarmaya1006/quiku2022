@@ -32,6 +32,7 @@ class CrearTablaWikuJurisprudencia extends Migration
             $table->longText('descripcion')->nullable();
             $table->bigInteger('destacado')->default(0);
             $table->bigInteger('estado')->default(1);
+            $table->text('edicion')->nullable();
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

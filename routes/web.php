@@ -24,10 +24,12 @@ use App\Http\Controllers\Intranet\Admin\ProductoController;
 use App\Http\Controllers\Intranet\Admin\ReferenciaController;
 use App\Http\Controllers\Intranet\Empresas\FuncionarioFController;
 use App\Http\Controllers\Intranet\Empresas\WikuController;
+use App\Http\Controllers\Intranet\Funcionarios\WikuEmpleadoController;
 use App\Http\Controllers\Intranet\Funcionarios\FuncionarioController;
 use App\Http\Controllers\Intranet\Funcionarios\AreasInfluenciaController;
 use App\Http\Controllers\Intranet\Funcionarios\AsignacionParticularController;
 use App\Http\Controllers\Intranet\Funcionarios\AsociacionTutelaWiku;
+use App\Http\Controllers\Intranet\Funcionarios\EmpleadoWikuargumentoController;
 use App\Http\Controllers\Intranet\Funcionarios\TutelaController;
 use App\Http\Controllers\Intranet\Funcionarios\TutelasConsulta;
 use App\Models\Tutela\TutelaRespuesta;
@@ -94,7 +96,19 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('index/gestionarAsignacionRadica/{id}', [FuncionarioController::class, 'gestionar_asignacion_radica'])->name('funcionario-gestionar-asignacion-radica');
         Route::get('index/gestionarAsignacionColaboracion/{id}', [PQRController::class, 'gestionar_asignacion_colaboracion'])->name('funcionario-gestionar-asignacion-colaboracion');
         Route::get('index/gestionarAsignacionColaboracion_wiku/{id}', [PQRController::class, 'gestionar_asignacion_colaboracion_wiku'])->name('funcionario-gestionar-asignacion-colaboracion_wiku');
-
+        //====================================================================================================================================================================================
+        Route::get('index/gest_wiku_empleado/{id}', [WikuEmpleadoController::class, 'index'])->name('gest_wiku_empleado');
+        //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        //argumentos
+        Route::get('wiku_argcriterios_empleado/crear/{id}', [EmpleadoWikuargumentoController::class, 'crear'])->name('wiku_argcriterios_empleado-crear');
+        Route::post('wiku_argcriterios_empleado-guardar/{id}', [EmpleadoWikuargumentoController::class, 'guardar'])->name('wiku_argcriterios_empleado-guardar');
+        Route::get('wiku_argcriterios_empleado/editar/{id}/{id_arg}', [EmpleadoWikuargumentoController::class, 'editar'])->name('wiku_argcriterios_empleado-editar');
+        Route::put('wiku_argcriterios_empleado-actualizar/{id}/{id_arg}', [EmpleadoWikuargumentoController::class, 'actualizar'])->name('wiku_argcriterios_empleado-actualizar');
+        Route::get('wiku_argumentos_cambios/{id}', [EmpleadoWikuargumentoController::class, 'cambios'])->name('wiku_argumentos_cambios');
+        Route::put('wiku_argumentos_cambios_aceptar/{id}', [EmpleadoWikuargumentoController::class, 'cambios_aceptar'])->name('wiku_argumentos_cambios_aceptar');
+        
+        //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        //====================================================================================================================================================================================
         Route::get('registro', [FuncionarioController::class, 'registro'])->name('funcionario-registro');
         Route::get('listado', [FuncionarioController::class, 'listado'])->name('tutela-listado');
         Route::get('listado/tutela/{id}', [TutelaController::class, 'vista_tutela'])->name('vista_tutela');

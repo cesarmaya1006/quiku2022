@@ -2,6 +2,7 @@
 
 namespace App\Models\Admin;
 
+use App\Models\Empleados\EmpleadoWikuargumento;
 use App\Models\PQR\tipoPQR;
 use App\Models\Tutela\Submotivotutela;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -52,6 +53,12 @@ class WikuArgumento extends Model
     public function asociacion_submotivotutelas()
     {
         return $this->belongsToMany(Submotivotutela::class, 'asociacionwikuargumentotutelas','wiku_argumento_id', 'submotivotutela_id');
+    }
+    //----------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------
+    public function cambios()
+    {
+        return $this->hasMany(EmpleadoWikuargumento::class, 'wikuargumento_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }
