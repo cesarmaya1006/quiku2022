@@ -66,23 +66,34 @@ class EmpleadoWikuargumentoController extends Controller
         return view('intranet.parametros.wiku.argumentos.cambios', compact('argumento'));
     }
     public function cambios_aceptar(Request $request, $id){
-        dd($request->toArray());
+        //dd($request->toArray());
         $argumento = WikuArgumento::findOrFail($id);
         $id_cambio = $argumento->cambios->where('wikuargumento_id',$argumento->id)->last()->id;
         $argumento_cambio = EmpleadoWikuargumento::findOrFail($id_cambio);
         if ($request['aceptacion']=='si') {
-            $argumento_new['edicion']=$argumento_cambio->observacion . ' - ' . $request['edicion'];
+            $argumento_new['observacion']=$argumento_cambio->observacion . ' - ' . $request['edicion'];
+            $argumento_new['fecha']=$argumento_cambio->fecha;
+            $argumento_new['wikuautorinstitu_id']=$argumento_cambio->wikuautorinstitu_id ;
+            $argumento_new['wikuautores_id']=$argumento_cambio->wikuautores_id ;
+            $argumento_new['texto']=$argumento_cambio->texto;
+            $argumento_new['descripcion']=$argumento_cambio->descripcion;
+            $argumento_new['wikutemaespecifico_id']=$argumento_cambio->wikutemaespecifico_id ;
+            $argumento_new['destacado']=$argumento_cambio->destacado;
+            $argumento_new['publico']=$argumento_cambio->publico;
+            $argumento_new['observacion']=$argumento_cambio->observacion;
+            //$argumento_new['estado']=$argumento_cambio->observacion;
+
             $argumento_cambio_new['respuesta']=$request['edicion'];
             $argumento_cambio_new['estado']=$request['edicion'];
-            
+
             WikuArgumento::findOrFail($id)->update($argumento_new);
             EmpleadoWikuargumento::findOrFail($id_cambio)->update($argumento_cambio_new);
             return redirect('admin/funcionario/wiku/index')->with('mensaje', 'Argumento editado con éxito.');
-            
+
         } else {
             return redirect('admin/funcionario/wiku/index')->with('mensaje', 'Se rechazo la edición');
         }
-        
+
         $argumento = WikuArgumento::findOrFail($id);
         return view('intranet.parametros.wiku.argumentos.cambios', compact('argumento'));
     }
