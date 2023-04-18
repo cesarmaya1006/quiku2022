@@ -10,7 +10,7 @@
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
-    Parametros - Analitica pos volumen
+    Parametros - Analitica por funcionarios
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
@@ -41,7 +41,7 @@
             </div>
             <div class="row mt-4">
                 <div class="form-check col-12 mb-5">
-                    <h4>Analítica por volumen</h4>
+                    <h4>Analítica por funcionarios</h4>
                 </div>
                 <div class="form-check col-12 col-md-2">
                     <input class="form-check-input check_clase" type="checkbox" value="" id="tipopqrCheck">

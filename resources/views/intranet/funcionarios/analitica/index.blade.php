@@ -40,7 +40,7 @@
             </div>
             <div class="row mt-4">
                 <div class="form-check col-12 mb-5">
-                    <h4>Analítica por tiempos medios de respuesta</h4>
+                    <h4>Analítica por cantidad </h4>
                 </div>
                 <div class="form-check col-12 col-md-2">
                     <input class="form-check-input check_clase" type="checkbox" value="" id="tipopqrCheck">

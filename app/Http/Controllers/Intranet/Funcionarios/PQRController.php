@@ -920,8 +920,7 @@ class PQRController extends Controller
     public function asignacion_guardar(Request $request)
     {
         if ($request->ajax()) {
-            $asignacionData['estado_asignacion'] =
-                (int) $request['confirmacionAsignacion'];
+            $asignacionData['estado_asignacion'] = (int) $request['confirmacionAsignacion'];
             if ($asignacionData['estado_asignacion'] == 0) {
                 $asignacionData['empleado_id'] = null;
                 $estado = PQR::findOrFail($request['idPqr'])->update(
@@ -929,14 +928,9 @@ class PQRController extends Controller
                 );
             } else {
                 $asignacionData['estadospqr_id'] = 2;
-                $estado = PQR::findOrFail($request['idPqr'])->update(
-                    $asignacionData
-                );
+                $estado = PQR::findOrFail($request['idPqr'])->update($asignacionData);
                 $tareas = Tarea::all();
-                $validarTareas = AsignacionTarea::where(
-                    'pqr_id',
-                    $request['idPqr']
-                )->get();
+                $validarTareas = AsignacionTarea::where('pqr_id',$request['idPqr'])->get();
                 if (!sizeOf($validarTareas)) {
                     foreach ($tareas as $value) {
                         $asignacionTarea['pqr_id'] = $request['idPqr'];

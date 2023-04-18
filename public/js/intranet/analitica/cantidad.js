@@ -27,7 +27,7 @@ $(document).ready(function() {
         });
         if (id != '') {
 
-            var titulo = 'Cantidad de Tutela por  ';
+            var titulo = 'Cantidad de Tutela por  Funcionario';
             cargarcanvas('tipopqr_id', id, titulo, 'Motivos', $('#annoBusqueda').val(), $('#tipoGrafico').val());
 
         }
