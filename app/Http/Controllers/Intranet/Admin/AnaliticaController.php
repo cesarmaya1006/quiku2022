@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Intranet\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Empleados\Empleado;
 use App\Models\PQR\Motivo;
 use App\Models\PQR\PQR;
 use App\Models\PQR\SubMotivo;
@@ -19,7 +20,93 @@ class AnaliticaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(){
+        $meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+        $bgColor =['bg-primary','bg-secondary','bg-success','bg-warning','bg-info',];
+        $tipospqr = tipoPQR::get();
+        $cont = 0;
+        foreach ($tipospqr as $tipopqr) {
+            if ($tipopqr->pqrs->count()) {
+                $data[] =['y'=>$tipopqr->pqrs->count(),'label'=> $tipopqr->tipo];
+            }
+            $tipopqr['bg_color'] = $bgColor[$cont];
+            if ($cont===4) {
+                $cont =0;
+            }else{
+                $cont++;
+            }
+        }
+        $pqr_mes= PQR::get();
+        $cant_enero =0;
+        $cant_febrero =0;
+        $cant_marzo =0;
+        $cant_abril =0;
+        $cant_mayo =0;
+        $cant_junio =0;
+        $cant_julio =0;
+        $cant_agosto =0;
+        $cant_septiembre =0;
+        $cant_octubre =0;
+        $cant_noviembre =0;
+        $cant_diciembreo =0;
+        foreach ($pqr_mes as $pqr) {
+            switch (date("m", strtotime($pqr->fecha_generacion))) {
+                case '1':
+                    $cant_enero++;
+                    break;
+                case '2':
+                    $cant_febrero++;
+                    break;
+                case '3':
+                    $cant_marzo++;
+                    break;
+                case '4':
+                    $cant_abril++;
+                    break;
+                case '5':
+                    $cant_mayo++;
+                    break;
+                case '6':
+                    $cant_junio++;
+                    break;
+                case '7':
+                    $cant_julio++;
+                    break;
+                case '8':
+                    $cant_agosto++;
+                    break;
+                case '9':
+                    $cant_septiembre++;
+                    break;
+                case '10':
+                    $cant_octubre++;
+                    break;
+                case '11':
+                    $cant_noviembre++;
+                    break;
+                default:
+                    $cant_diciembreo++;
+                    break;
+            }
+        }
+        $data_mes = [
+            ['y'=>$cant_enero,'label'=> $meses[0]],
+            ['y'=>$cant_febrero,'label'=> $meses[1]],
+            ['y'=>$cant_marzo,'label'=> $meses[2]],
+            ['y'=>$cant_abril,'label'=> $meses[3]],
+            ['y'=>$cant_mayo,'label'=> $meses[4]],
+            ['y'=>$cant_junio,'label'=> $meses[5]],
+            ['y'=>$cant_julio,'label'=> $meses[6]],
+            ['y'=>$cant_agosto,'label'=> $meses[7]],
+            ['y'=>$cant_septiembre,'label'=> $meses[8]],
+            ['y'=>$cant_octubre,'label'=> $meses[9]],
+            ['y'=>$cant_noviembre,'label'=> $meses[10]],
+            ['y'=>$cant_diciembreo,'label'=> $meses[11]],
+
+        ];
+        return view('intranet.funcionarios.analitica.index',compact('tipospqr','data','data_mes'));
+    }
+    public function index2()
     {
         $tiempomedio = [];
         $tipos_pqr = tipoPQR::get();
@@ -58,7 +145,32 @@ class AnaliticaController extends Controller
         ));
     }
 
-    public function cantidad()
+    public function cantidad(){
+        $meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+        $tipos_pqr = tipoPQR::get();
+        $categorias = Categoria::get();
+        $servicios = Servicio::get();
+        $primeraPqr = PQR::first();
+        $ultimaPqr = PQR::latest('fecha_generacion')->first();
+        $fechaannoini = Carbon::parse($primeraPqr->fecha_generacion);
+        $annoini = $fechaannoini->year;
+        $fechaannofin = Carbon::parse($ultimaPqr->fecha_radicado);
+        $annofin = $fechaannofin->year;
+        $empleados = Empleado::get();
+
+        return view('intranet.funcionarios.analitica.cantidad', compact(
+            'tipos_pqr',
+            'categorias',
+            'servicios',
+            'annoini',
+            'annofin',
+            'meses',
+            'empleados'
+        ));
+
+    }
+
+    public function cantidad_2()
     {
         $tipos_pqr = tipoPQR::get();
         $categorias = Categoria::get();
@@ -413,5 +525,703 @@ class AnaliticaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function cargar_graficos(Request $request){
+        //dd($request->all());
+        if ($request->ajax()) {
+            $meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+            $esp_rango = $request['esp_rango'];
+            $anno_busqueda = $request['anno_busqueda'];
+            $cant_enero =0;
+            $cant_febrero =0;
+            $cant_marzo =0;
+            $cant_abril =0;
+            $cant_mayo =0;
+            $cant_junio =0;
+            $cant_julio =0;
+            $cant_agosto =0;
+            $cant_septiembre =0;
+            $cant_octubre =0;
+            $cant_noviembre =0;
+            $cant_diciembreo =0;
+            switch ($esp_rango) {
+                case '1':
+                    $tipo_p_q_r_id = $request['tipo_p_q_r_id'];
+                    $motivo_id = $request['motivo_id'];
+                    $motivo_sub_id = $request['motivo_sub_id'];
+                    $cant_enero =0;
+                    $cant_febrero =0;
+                    $cant_marzo =0;
+                    $cant_abril =0;
+                    $cant_mayo =0;
+                    $cant_junio =0;
+                    $cant_julio =0;
+                    $cant_agosto =0;
+                    $cant_septiembre =0;
+                    $cant_octubre =0;
+                    $cant_noviembre =0;
+                    $cant_diciembreo =0;
+                    if ($motivo_sub_id != null) {
+                        $pqr_s = PQR::whereYear('fecha_generacion', $anno_busqueda)->whereHas('peticiones', function ($p) use ($motivo_sub_id) {
+                            $p->where('motivo_sub_id', $motivo_sub_id);
+                        })->get();
+                    }elseif ($motivo_id != null) {
+                        $pqr_s = PQR::whereYear('fecha_generacion', $anno_busqueda)->whereHas('peticiones', function ($p) use ($motivo_id) {
+                            $p->whereHas('motivo', function ($q) use ($motivo_id) {
+                                $q->where('motivo_id', $motivo_id);
+                            });
+                        })->get();
+                    }elseif ($tipo_p_q_r_id != null) {
+                        $pqr_s = PQR::whereYear('fecha_generacion', $anno_busqueda)->whereHas('peticiones', function ($p) use ($tipo_p_q_r_id) {
+                            $p->whereHas('motivo', function ($q) use ($tipo_p_q_r_id) {
+                                $q->whereHas('motivo', function ($r) use ($tipo_p_q_r_id) {
+                                    $r->where('tipo_pqr_id', $tipo_p_q_r_id);
+                                });
+                            });
+                        })->get();
+                    }
+                    foreach ($pqr_s as $pqr) {
+                        switch (date("m", strtotime($pqr->fecha_generacion))) {
+                            case '1':
+                                $cant_enero++;
+                                break;
+                            case '2':
+                                $cant_febrero++;
+                                break;
+                            case '3':
+                                $cant_marzo++;
+                                break;
+                            case '4':
+                                $cant_abril++;
+                                break;
+                            case '5':
+                                $cant_mayo++;
+                                break;
+                            case '6':
+                                $cant_junio++;
+                                break;
+                            case '7':
+                                $cant_julio++;
+                                break;
+                            case '8':
+                                $cant_agosto++;
+                                break;
+                            case '9':
+                                $cant_septiembre++;
+                                break;
+                            case '10':
+                                $cant_octubre++;
+                                break;
+                            case '11':
+                                $cant_noviembre++;
+                                break;
+                            default:
+                                $cant_diciembreo++;
+                                break;
+                        }
+                    }
+                    $data_mes = [
+                        ['y'=>$cant_enero,'label'=> $meses[0]],
+                        ['y'=>$cant_febrero,'label'=> $meses[1]],
+                        ['y'=>$cant_marzo,'label'=> $meses[2]],
+                        ['y'=>$cant_abril,'label'=> $meses[3]],
+                        ['y'=>$cant_mayo,'label'=> $meses[4]],
+                        ['y'=>$cant_junio,'label'=> $meses[5]],
+                        ['y'=>$cant_julio,'label'=> $meses[6]],
+                        ['y'=>$cant_agosto,'label'=> $meses[7]],
+                        ['y'=>$cant_septiembre,'label'=> $meses[8]],
+                        ['y'=>$cant_octubre,'label'=> $meses[9]],
+                        ['y'=>$cant_noviembre,'label'=> $meses[10]],
+                        ['y'=>$cant_diciembreo,'label'=> $meses[11]]
+
+                    ];
+                    return response()->json(['data_mes' => $data_mes]);
+                    break;
+                case '2':
+                    $categoria_id = $request['categoria_id'];
+                    $producto_id = $request['producto_id'];
+                    $marca_id = $request['marca_id'];
+                    $referencia_id = $request['referencia_id'];
+                    $cant_enero =0;
+                    $cant_febrero =0;
+                    $cant_marzo =0;
+                    $cant_abril =0;
+                    $cant_mayo =0;
+                    $cant_junio =0;
+                    $cant_julio =0;
+                    $cant_agosto =0;
+                    $cant_septiembre =0;
+                    $cant_octubre =0;
+                    $cant_noviembre =0;
+                    $cant_diciembreo =0;
+                    if ($referencia_id != null) {
+                        $pqr_s = PQR::whereYear('fecha_generacion', $anno_busqueda)->where('referencia_id',$referencia_id)->get();
+                    }elseif ($marca_id != null) {
+                        $pqr_s = PQR::whereYear('fecha_generacion', $anno_busqueda)->whereHas('referencia', function ($p) use ($marca_id) {
+                            $p->where('marca_id', $marca_id);
+                        })->get();
+                    }elseif ($producto_id != null) {
+                        $pqr_s = PQR::whereYear('fecha_generacion', $anno_busqueda)->whereHas('referencia', function ($p) use ($producto_id) {
+                            $p->whereHas('marca', function ($q) use ($producto_id) {
+                                $q->where('producto_id', $producto_id);
+                            });
+                        })->get();
+                    }elseif ($categoria_id != null) {
+                        $pqr_s = PQR::whereYear('fecha_generacion', $anno_busqueda)->whereHas('referencia', function ($p) use ($categoria_id) {
+                            $p->whereHas('marca', function ($q) use ($categoria_id) {
+                                $q->whereHas('producto', function ($r) use ($categoria_id) {
+                                    $r->where('categoria_id', $categoria_id);
+                                });
+                            });
+                        })->get();
+                    }
+                    //dd($pqr_s->toArray());
+                    foreach ($pqr_s as $pqr) {
+                        switch (date("m", strtotime($pqr->fecha_generacion))) {
+                            case '1':
+                                $cant_enero++;
+                                break;
+                            case '2':
+                                $cant_febrero++;
+                                break;
+                            case '3':
+                                $cant_marzo++;
+                                break;
+                            case '4':
+                                $cant_abril++;
+                                break;
+                            case '5':
+                                $cant_mayo++;
+                                break;
+                            case '6':
+                                $cant_junio++;
+                                break;
+                            case '7':
+                                $cant_julio++;
+                                break;
+                            case '8':
+                                $cant_agosto++;
+                                break;
+                            case '9':
+                                $cant_septiembre++;
+                                break;
+                            case '10':
+                                $cant_octubre++;
+                                break;
+                            case '11':
+                                $cant_noviembre++;
+                                break;
+                            default:
+                                $cant_diciembreo++;
+                                break;
+                        }
+                    }
+                    $data_mes = [
+                        ['y'=>$cant_enero,'label'=> $meses[0]],
+                        ['y'=>$cant_febrero,'label'=> $meses[1]],
+                        ['y'=>$cant_marzo,'label'=> $meses[2]],
+                        ['y'=>$cant_abril,'label'=> $meses[3]],
+                        ['y'=>$cant_mayo,'label'=> $meses[4]],
+                        ['y'=>$cant_junio,'label'=> $meses[5]],
+                        ['y'=>$cant_julio,'label'=> $meses[6]],
+                        ['y'=>$cant_agosto,'label'=> $meses[7]],
+                        ['y'=>$cant_septiembre,'label'=> $meses[8]],
+                        ['y'=>$cant_octubre,'label'=> $meses[9]],
+                        ['y'=>$cant_noviembre,'label'=> $meses[10]],
+                        ['y'=>$cant_diciembreo,'label'=> $meses[11]]
+
+                    ];
+                    return response()->json(['data_mes' => $data_mes]);
+                    break;
+                case '3':
+                    $empleado_id = $request['empleado_id'];
+                    $cant_enero =0;
+                    $cant_febrero =0;
+                    $cant_marzo =0;
+                    $cant_abril =0;
+                    $cant_mayo =0;
+                    $cant_junio =0;
+                    $cant_julio =0;
+                    $cant_agosto =0;
+                    $cant_septiembre =0;
+                    $cant_octubre =0;
+                    $cant_noviembre =0;
+                    $cant_diciembreo =0;
+                    if ($empleado_id != null) {
+                        $pqr_s = PQR::whereYear('fecha_generacion', $anno_busqueda)->where('empleado_id',$empleado_id)->get();
+                    }
+                    //dd($pqr_s->toArray());
+                    foreach ($pqr_s as $pqr) {
+                        switch (date("m", strtotime($pqr->fecha_generacion))) {
+                            case '1':
+                                $cant_enero++;
+                                break;
+                            case '2':
+                                $cant_febrero++;
+                                break;
+                            case '3':
+                                $cant_marzo++;
+                                break;
+                            case '4':
+                                $cant_abril++;
+                                break;
+                            case '5':
+                                $cant_mayo++;
+                                break;
+                            case '6':
+                                $cant_junio++;
+                                break;
+                            case '7':
+                                $cant_julio++;
+                                break;
+                            case '8':
+                                $cant_agosto++;
+                                break;
+                            case '9':
+                                $cant_septiembre++;
+                                break;
+                            case '10':
+                                $cant_octubre++;
+                                break;
+                            case '11':
+                                $cant_noviembre++;
+                                break;
+                            default:
+                                $cant_diciembreo++;
+                                break;
+                        }
+                    }
+                    $data_mes = [
+                        ['y'=>$cant_enero,'label'=> $meses[0]],
+                        ['y'=>$cant_febrero,'label'=> $meses[1]],
+                        ['y'=>$cant_marzo,'label'=> $meses[2]],
+                        ['y'=>$cant_abril,'label'=> $meses[3]],
+                        ['y'=>$cant_mayo,'label'=> $meses[4]],
+                        ['y'=>$cant_junio,'label'=> $meses[5]],
+                        ['y'=>$cant_julio,'label'=> $meses[6]],
+                        ['y'=>$cant_agosto,'label'=> $meses[7]],
+                        ['y'=>$cant_septiembre,'label'=> $meses[8]],
+                        ['y'=>$cant_octubre,'label'=> $meses[9]],
+                        ['y'=>$cant_noviembre,'label'=> $meses[10]],
+                        ['y'=>$cant_diciembreo,'label'=> $meses[11]]
+
+                    ];
+                    return response()->json(['data_mes' => $data_mes]);
+                    break;
+                case '4':
+                    $tipo_p_q_r_id = $request['tipo_p_q_r_id'];
+                    $motivo_id = $request['motivo_id'];
+                    $motivo_sub_id = $request['motivo_sub_id'];
+                    $categoria_id = $request['categoria_id'];
+                    $producto_id = $request['producto_id'];
+                    $marca_id = $request['marca_id'];
+                    $referencia_id = $request['referencia_id'];
+
+                    if ($motivo_sub_id != null) {
+                        if ($referencia_id != null) {
+                            $pqr_s = PQR::
+                                        whereYear('fecha_generacion', $anno_busqueda)
+                                        ->where('referencia_id',$referencia_id)
+                                        ->whereHas('peticiones', function ($p) use ($motivo_sub_id) {
+                                            $p->where('motivo_sub_id', $motivo_sub_id);
+                                        })->get();
+                        }elseif ($marca_id != null) {
+                            $pqr_s = PQR::
+                                        whereYear('fecha_generacion', $anno_busqueda)
+                                        ->whereHas('referencia', function ($p) use ($marca_id) {
+                                            $p->where('marca_id', $marca_id);
+                                        })
+                                        ->whereHas('peticiones', function ($p) use ($motivo_sub_id) {
+                                            $p->where('motivo_sub_id', $motivo_sub_id);
+                                        })->get();
+                        }elseif ($producto_id != null) {
+                            $pqr_s = PQR::
+                                        whereYear('fecha_generacion', $anno_busqueda)
+                                        ->whereHas('referencia', function ($p) use ($producto_id) {
+                                            $p->whereHas('marca', function ($q) use ($producto_id) {
+                                                $q->where('producto_id', $producto_id);
+                                            });
+                                        })
+                                        ->whereHas('peticiones', function ($p) use ($motivo_sub_id) {
+                                            $p->where('motivo_sub_id', $motivo_sub_id);
+                                        })->get();
+                        }elseif ($categoria_id != null) {
+                            $pqr_s = PQR::
+                                        whereYear('fecha_generacion', $anno_busqueda)
+                                        ->whereHas('referencia', function ($p) use ($categoria_id) {
+                                            $p->whereHas('marca', function ($q) use ($categoria_id) {
+                                                $q->whereHas('producto', function ($r) use ($categoria_id) {
+                                                    $r->where('categoria_id', $categoria_id);
+                                                });
+                                            });
+                                        })
+                                        ->whereHas('peticiones', function ($p) use ($motivo_sub_id) {
+                                            $p->where('motivo_sub_id', $motivo_sub_id);
+                                        })->get();
+                        }
+                    }elseif ($motivo_id != null) {
+                        if ($referencia_id != null) {
+                            $pqr_s = PQR::
+                                        whereYear('fecha_generacion', $anno_busqueda)
+                                        ->where('referencia_id',$referencia_id)
+                                        ->whereHas('peticiones', function ($p) use ($motivo_id) {
+                                            $p->whereHas('motivo', function ($q) use ($motivo_id) {
+                                                $q->where('motivo_id', $motivo_id);
+                                            });
+                                        })->get();
+                        }elseif ($marca_id != null) {
+                            $pqr_s = PQR::
+                                        whereYear('fecha_generacion', $anno_busqueda)
+                                        ->whereHas('referencia', function ($p) use ($marca_id) {
+                                            $p->where('marca_id', $marca_id);
+                                        })
+                                        ->whereHas('peticiones', function ($p) use ($motivo_id) {
+                                            $p->whereHas('motivo', function ($q) use ($motivo_id) {
+                                                $q->where('motivo_id', $motivo_id);
+                                            });
+                                        })->get();
+                        }elseif ($producto_id != null) {
+                            $pqr_s = PQR::
+                                        whereYear('fecha_generacion', $anno_busqueda)
+                                        ->whereHas('referencia', function ($p) use ($producto_id) {
+                                            $p->whereHas('marca', function ($q) use ($producto_id) {
+                                                $q->where('producto_id', $producto_id);
+                                            });
+                                        })
+                                        ->whereHas('peticiones', function ($p) use ($motivo_id) {
+                                            $p->whereHas('motivo', function ($q) use ($motivo_id) {
+                                                $q->where('motivo_id', $motivo_id);
+                                            });
+                                        })->get();
+                        }elseif ($categoria_id != null) {
+                            $pqr_s = PQR::
+                                        whereYear('fecha_generacion', $anno_busqueda)
+                                        ->whereHas('referencia', function ($p) use ($categoria_id) {
+                                            $p->whereHas('marca', function ($q) use ($categoria_id) {
+                                                $q->whereHas('producto', function ($r) use ($categoria_id) {
+                                                    $r->where('categoria_id', $categoria_id);
+                                                });
+                                            });
+                                        })
+                                        ->whereHas('peticiones', function ($p) use ($motivo_id) {
+                                            $p->whereHas('motivo', function ($q) use ($motivo_id) {
+                                                $q->where('motivo_id', $motivo_id);
+                                            });
+                                        })->get();
+                        }
+                    }elseif ($tipo_p_q_r_id != null) {
+                        if ($referencia_id != null) {
+                            $pqr_s = PQR::
+                                        whereYear('fecha_generacion', $anno_busqueda)
+                                        ->where('referencia_id',$referencia_id)
+                                        ->whereHas('peticiones', function ($p) use ($tipo_p_q_r_id) {
+                                            $p->whereHas('motivo', function ($q) use ($tipo_p_q_r_id) {
+                                                $q->whereHas('motivo', function ($r) use ($tipo_p_q_r_id) {
+                                                    $r->where('tipo_pqr_id', $tipo_p_q_r_id);
+                                                });
+                                            });
+                                        })->get();
+                        }elseif ($marca_id != null) {
+                            $pqr_s = PQR::
+                                        whereYear('fecha_generacion', $anno_busqueda)
+                                        ->whereHas('referencia', function ($p) use ($marca_id) {
+                                            $p->where('marca_id', $marca_id);
+                                        })
+                                        ->whereHas('peticiones', function ($p) use ($tipo_p_q_r_id) {
+                                            $p->whereHas('motivo', function ($q) use ($tipo_p_q_r_id) {
+                                                $q->whereHas('motivo', function ($r) use ($tipo_p_q_r_id) {
+                                                    $r->where('tipo_pqr_id', $tipo_p_q_r_id);
+                                                });
+                                            });
+                                        })->get();
+                        }elseif ($producto_id != null) {
+                            $pqr_s = PQR::
+                                        whereYear('fecha_generacion', $anno_busqueda)
+                                        ->whereHas('referencia', function ($p) use ($producto_id) {
+                                            $p->whereHas('marca', function ($q) use ($producto_id) {
+                                                $q->where('producto_id', $producto_id);
+                                            });
+                                        })
+                                        ->whereHas('peticiones', function ($p) use ($tipo_p_q_r_id) {
+                                            $p->whereHas('motivo', function ($q) use ($tipo_p_q_r_id) {
+                                                $q->whereHas('motivo', function ($r) use ($tipo_p_q_r_id) {
+                                                    $r->where('tipo_pqr_id', $tipo_p_q_r_id);
+                                                });
+                                            });
+                                        })->get();
+                        }elseif ($categoria_id != null) {
+                            $pqr_s = PQR::
+                                        whereYear('fecha_generacion', $anno_busqueda)
+                                        ->whereHas('referencia', function ($p) use ($categoria_id) {
+                                            $p->whereHas('marca', function ($q) use ($categoria_id) {
+                                                $q->whereHas('producto', function ($r) use ($categoria_id) {
+                                                    $r->where('categoria_id', $categoria_id);
+                                                });
+                                            });
+                                        })
+                                        ->whereHas('peticiones', function ($p) use ($tipo_p_q_r_id) {
+                                            $p->whereHas('motivo', function ($q) use ($tipo_p_q_r_id) {
+                                                $q->whereHas('motivo', function ($r) use ($tipo_p_q_r_id) {
+                                                    $r->where('tipo_pqr_id', $tipo_p_q_r_id);
+                                                });
+                                            });
+                                        })->get();
+                        }
+                    }
+                    //dd($pqr_s->toArray());
+                    foreach ($pqr_s as $pqr) {
+                        switch (date("m", strtotime($pqr->fecha_generacion))) {
+                            case '1':
+                                $cant_enero++;
+                                break;
+                            case '2':
+                                $cant_febrero++;
+                                break;
+                            case '3':
+                                $cant_marzo++;
+                                break;
+                            case '4':
+                                $cant_abril++;
+                                break;
+                            case '5':
+                                $cant_mayo++;
+                                break;
+                            case '6':
+                                $cant_junio++;
+                                break;
+                            case '7':
+                                $cant_julio++;
+                                break;
+                            case '8':
+                                $cant_agosto++;
+                                break;
+                            case '9':
+                                $cant_septiembre++;
+                                break;
+                            case '10':
+                                $cant_octubre++;
+                                break;
+                            case '11':
+                                $cant_noviembre++;
+                                break;
+                            default:
+                                $cant_diciembreo++;
+                                break;
+                        }
+                    }
+                    $data_mes = [
+                        ['y'=>$cant_enero,'label'=> $meses[0]],
+                        ['y'=>$cant_febrero,'label'=> $meses[1]],
+                        ['y'=>$cant_marzo,'label'=> $meses[2]],
+                        ['y'=>$cant_abril,'label'=> $meses[3]],
+                        ['y'=>$cant_mayo,'label'=> $meses[4]],
+                        ['y'=>$cant_junio,'label'=> $meses[5]],
+                        ['y'=>$cant_julio,'label'=> $meses[6]],
+                        ['y'=>$cant_agosto,'label'=> $meses[7]],
+                        ['y'=>$cant_septiembre,'label'=> $meses[8]],
+                        ['y'=>$cant_octubre,'label'=> $meses[9]],
+                        ['y'=>$cant_noviembre,'label'=> $meses[10]],
+                        ['y'=>$cant_diciembreo,'label'=> $meses[11]]
+
+                    ];
+                    return response()->json(['data_mes' => $data_mes]);
+                    break;
+                case '5':
+                    $tipo_p_q_r_id = $request['tipo_p_q_r_id'];
+                    $motivo_id = $request['motivo_id'];
+                    $motivo_sub_id = $request['motivo_sub_id'];
+                    $empleado_id = $request['empleado_id'];
+                    if ($empleado_id != null) {
+                        if ($motivo_sub_id != null) {
+                            $pqr_s = PQR::
+                                whereYear('fecha_generacion', $anno_busqueda)
+                                ->where('empleado_id',$empleado_id)
+                                ->whereHas('peticiones', function ($p) use ($motivo_sub_id) {
+                                    $p->where('motivo_sub_id', $motivo_sub_id);
+                                })->get();
+                        }elseif ($motivo_id != null) {
+                            $pqr_s = PQR::
+                                        whereYear('fecha_generacion', $anno_busqueda)
+                                        ->where('empleado_id',$empleado_id)
+                                        ->whereHas('peticiones', function ($p) use ($motivo_id) {
+                                            $p->whereHas('motivo', function ($q) use ($motivo_id) {
+                                                $q->where('motivo_id', $motivo_id);
+                                            });
+                                        })->get();
+                        }elseif ($tipo_p_q_r_id != null) {
+                            $pqr_s = PQR::
+                                        whereYear('fecha_generacion', $anno_busqueda)
+                                        ->where('empleado_id',$empleado_id)
+                                        ->whereHas('peticiones', function ($p) use ($tipo_p_q_r_id) {
+                                            $p->whereHas('motivo', function ($q) use ($tipo_p_q_r_id) {
+                                                $q->whereHas('motivo', function ($r) use ($tipo_p_q_r_id) {
+                                                    $r->where('tipo_pqr_id', $tipo_p_q_r_id);
+                                                });
+                                            });
+                                        })->get();
+                        }
+                    }
+                    foreach ($pqr_s as $pqr) {
+                        switch (date("m", strtotime($pqr->fecha_generacion))) {
+                            case '1':
+                                $cant_enero++;
+                                break;
+                            case '2':
+                                $cant_febrero++;
+                                break;
+                            case '3':
+                                $cant_marzo++;
+                                break;
+                            case '4':
+                                $cant_abril++;
+                                break;
+                            case '5':
+                                $cant_mayo++;
+                                break;
+                            case '6':
+                                $cant_junio++;
+                                break;
+                            case '7':
+                                $cant_julio++;
+                                break;
+                            case '8':
+                                $cant_agosto++;
+                                break;
+                            case '9':
+                                $cant_septiembre++;
+                                break;
+                            case '10':
+                                $cant_octubre++;
+                                break;
+                            case '11':
+                                $cant_noviembre++;
+                                break;
+                            default:
+                                $cant_diciembreo++;
+                                break;
+                        }
+                    }
+                    $data_mes = [
+                        ['y'=>$cant_enero,'label'=> $meses[0]],
+                        ['y'=>$cant_febrero,'label'=> $meses[1]],
+                        ['y'=>$cant_marzo,'label'=> $meses[2]],
+                        ['y'=>$cant_abril,'label'=> $meses[3]],
+                        ['y'=>$cant_mayo,'label'=> $meses[4]],
+                        ['y'=>$cant_junio,'label'=> $meses[5]],
+                        ['y'=>$cant_julio,'label'=> $meses[6]],
+                        ['y'=>$cant_agosto,'label'=> $meses[7]],
+                        ['y'=>$cant_septiembre,'label'=> $meses[8]],
+                        ['y'=>$cant_octubre,'label'=> $meses[9]],
+                        ['y'=>$cant_noviembre,'label'=> $meses[10]],
+                        ['y'=>$cant_diciembreo,'label'=> $meses[11]]
+
+                    ];
+                    return response()->json(['data_mes' => $data_mes]);
+
+                    break;
+                case '6':
+                    $empleado_id = $request['empleado_id'];
+                    $categoria_id = $request['categoria_id'];
+                    $producto_id = $request['producto_id'];
+                    $marca_id = $request['marca_id'];
+                    $referencia_id = $request['referencia_id'];
+                    if ($empleado_id != null) {
+                        if ($referencia_id != null) {
+                            $pqr_s = PQR::whereYear('fecha_generacion', $anno_busqueda)
+                            ->where('empleado_id',$empleado_id)
+                            ->where('referencia_id',$referencia_id)->get();
+                        }elseif ($marca_id != null) {
+                            $pqr_s = PQR::whereYear('fecha_generacion', $anno_busqueda)
+                            ->where('empleado_id',$empleado_id)
+                            ->whereHas('referencia', function ($p) use ($marca_id) {
+                                $p->where('marca_id', $marca_id);
+                            })->get();
+                        }elseif ($producto_id != null) {
+                            $pqr_s = PQR::whereYear('fecha_generacion', $anno_busqueda)
+                            ->where('empleado_id',$empleado_id)
+                            ->whereHas('referencia', function ($p) use ($producto_id) {
+                                $p->whereHas('marca', function ($q) use ($producto_id) {
+                                    $q->where('producto_id', $producto_id);
+                                });
+                            })->get();
+                        }elseif ($categoria_id != null) {
+                            $pqr_s = PQR::whereYear('fecha_generacion', $anno_busqueda)
+                            ->where('empleado_id',$empleado_id)
+                            ->whereHas('referencia', function ($p) use ($categoria_id) {
+                                $p->whereHas('marca', function ($q) use ($categoria_id) {
+                                    $q->whereHas('producto', function ($r) use ($categoria_id) {
+                                        $r->where('categoria_id', $categoria_id);
+                                    });
+                                });
+                            })->get();
+                        }
+                    }
+                    //dd($pqr_s->toArray());
+                    foreach ($pqr_s as $pqr) {
+                        switch (date("m", strtotime($pqr->fecha_generacion))) {
+                            case '1':
+                                $cant_enero++;
+                                break;
+                            case '2':
+                                $cant_febrero++;
+                                break;
+                            case '3':
+                                $cant_marzo++;
+                                break;
+                            case '4':
+                                $cant_abril++;
+                                break;
+                            case '5':
+                                $cant_mayo++;
+                                break;
+                            case '6':
+                                $cant_junio++;
+                                break;
+                            case '7':
+                                $cant_julio++;
+                                break;
+                            case '8':
+                                $cant_agosto++;
+                                break;
+                            case '9':
+                                $cant_septiembre++;
+                                break;
+                            case '10':
+                                $cant_octubre++;
+                                break;
+                            case '11':
+                                $cant_noviembre++;
+                                break;
+                            default:
+                                $cant_diciembreo++;
+                                break;
+                        }
+                    }
+                    $data_mes = [
+                        ['y'=>$cant_enero,'label'=> $meses[0]],
+                        ['y'=>$cant_febrero,'label'=> $meses[1]],
+                        ['y'=>$cant_marzo,'label'=> $meses[2]],
+                        ['y'=>$cant_abril,'label'=> $meses[3]],
+                        ['y'=>$cant_mayo,'label'=> $meses[4]],
+                        ['y'=>$cant_junio,'label'=> $meses[5]],
+                        ['y'=>$cant_julio,'label'=> $meses[6]],
+                        ['y'=>$cant_agosto,'label'=> $meses[7]],
+                        ['y'=>$cant_septiembre,'label'=> $meses[8]],
+                        ['y'=>$cant_octubre,'label'=> $meses[9]],
+                        ['y'=>$cant_noviembre,'label'=> $meses[10]],
+                        ['y'=>$cant_diciembreo,'label'=> $meses[11]]
+
+                    ];
+                    return response()->json(['data_mes' => $data_mes]);
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+            //=======================================================================================================================
+        } else {
+            abort(404);
+        }
     }
 }

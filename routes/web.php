@@ -106,7 +106,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('wiku_argcriterios_empleado-actualizar/{id}/{id_arg}', [EmpleadoWikuargumentoController::class, 'actualizar'])->name('wiku_argcriterios_empleado-actualizar');
         Route::get('wiku_argumentos_cambios/{id}', [EmpleadoWikuargumentoController::class, 'cambios'])->name('wiku_argumentos_cambios');
         Route::put('wiku_argumentos_cambios_aceptar/{id}', [EmpleadoWikuargumentoController::class, 'cambios_aceptar'])->name('wiku_argumentos_cambios_aceptar');
-        
+
         //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         //====================================================================================================================================================================================
         Route::get('registro', [FuncionarioController::class, 'registro'])->name('funcionario-registro');
@@ -616,6 +616,19 @@ Route::group(['middleware' => 'auth'], function () {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //guardar pdf PQR
     Route::get('pqr_pdf_guardar', [EmailController::class, 'pqr_pdf_guardar'])->name('pqr_pdf_guardar');
+    Route::group(['middleware' => 'administrador'], function () {
+        // Gestion de analitica
+        Route::get('analitica', [AnaliticaController::class, 'index'])->name('analitica-index');
+        Route::get('analitica/cantidad', [AnaliticaController::class, 'cantidad'])->name('analitica-cantidad');
+        Route::post('analitica/cargar_graficos', [AnaliticaController::class, 'cargar_graficos'])->name('analitica-cargar_graficos');
+        //=======================================================================================
+        //Route::get('analitica/index/cantidad', [AnaliticaController::class, 'cantidad'])->name('analitica-cantidad');
+        Route::get('analitica/tipoPQR', [AnaliticaController::class, 'tipoPQR'])->name('analitica-tipoPQR');
+        Route::get('analitica/cantidad_cargar', [AnaliticaController::class, 'cantidad_cargar'])->name('analitica-cantidad_cargar');
+
+    });
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 });
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

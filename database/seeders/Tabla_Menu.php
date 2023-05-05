@@ -52,6 +52,7 @@ class Tabla_Menu extends Seeder
             ['nombre' =>  'PQR', 'menu_id' => '0', 'url' =>  '#', 'orden' => '2', 'icono' =>  'Elija un Icono'],
             ['nombre' =>  'Conf Cuenta Usuario', 'menu_id' => '0', 'url' =>  '#', 'orden' => '5', 'icono' =>  'fas fa-user-cog'],
             ['nombre' =>  'Gestionar PQR', 'menu_id' => '33', 'url' =>  'funcionario/gestion_pqr', 'orden' => '2', 'icono' =>  'fas fa-grip-horizontal'],
+            ['nombre' =>  'Analítica', 'menu_id' => '0', 'url' =>  'analitica', 'orden' => '9', 'icono' =>  'fas fa-grip-horizontal'],
             //----------------------------------------------------------------------------------------------------------------------
 
         ];
