@@ -244,6 +244,30 @@
                     </div>
                 </div>
             </div>
+            <hr class="d-none mt-3 mb-4" id="hr_tablas">
+            <div class="row cajaTabla d-none" id="cajaTabla">
+                <div class="col-12 text-center">
+                    <h4 id="titulo_tabla"></h4>
+                </div>
+                <div class="col-12">
+                    <table class="table table-striped table-hover table-sm tabla_data_table">
+                        <thead class="thead-inverse">
+                            <tr>
+                                <th class="text-center" id="tituloTabla1" style="white-space:nowrap;">Item</th>
+                                <th class="text-center" id="tituloTabla2" style="white-space:nowrap;">Mes</th>
+                                <th class="text-center" id="tituloTabla3" style="white-space:nowrap;">Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyTabla">
+                            <tr>
+                                <td class="text-center">Columna 1</td>
+                                <td class="text-center">Val 1</td>
+                                <td class="text-center">Val 1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <div class="card-footer">
 

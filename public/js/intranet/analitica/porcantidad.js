@@ -155,6 +155,18 @@ $(document).ready(function() {
                 }else if(tipo_grafico=='area'){
                     grafico_area(respuesta.data_mes,titulo);
                 }
+                $('#titulo_tabla').html(titulo);
+                $('#cajaTabla').removeClass('d-none');
+                $('#hr_tablas').removeClass('d-none');
+                html_='';
+                respuesta.data_mes.forEach(function(item, index) {
+                    html_ += '<tr>';
+                    html_ += '<td class="text-center" style="white-space:nowrapmin-width:250px;">' + text + '</td>';
+                    html_ += '<td class="text-center" style="white-space:nowrap;min-width:50px;">' + item['label'] + '</td>';
+                    html_ += '<td class="text-center" style="white-space:nowrap;min-width:50px;">' + item['y'] + '</td>';
+                    html_ += '</tr>';
+                });
+                $('#bodyTabla').html(html_);
             },
             error: function() {
 
