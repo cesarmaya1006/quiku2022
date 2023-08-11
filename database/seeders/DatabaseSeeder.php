@@ -89,7 +89,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Tabla_WikuPalabrasArgumentos::class);
         $this->call(Tabla_Motivotutelas::class);
         $this->call(Tabla_Submotivotutelas::class);
-        $this->call(Tabla_PQR_Peticiones_Hechos::class);
+        //$this->call(Tabla_PQR_Peticiones_Hechos::class);
         //$this->call(Tabla_Peticiones_PQR::class);
         //$this->call(Tabla_Hechos_Peticiones_PQR::class);
 

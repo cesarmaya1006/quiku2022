@@ -50,6 +50,8 @@
                                 <option value="4">Área de conocimiento contra Caracterizaciones de PQR</option>
                                 <option value="5">Área de conocimiento contra Empleados</option>
                                 <option value="6">Caracterización de PQR contra Empleados</option>
+                                <option value="7">Empleados por estado de pqr</option>
+                                <option value="8">Empleados por tiempos de respuesta</option>
                             </select>
                         </div>
                     </div>

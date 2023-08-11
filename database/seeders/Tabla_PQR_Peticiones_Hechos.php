@@ -22,10 +22,13 @@ class Tabla_PQR_Peticiones_Hechos extends Seeder
     public function run()
     {
         $fecha_ini = date('2023-01-01');
-        for ($i = 1; $i < 101; $i++) {
+        for ($i = 1; $i < 141; $i++) {
             $fecha_generacion = date('Y-m-d',strtotime(date('Y-m-d', strtotime($fecha_ini . '+ ' . $i . ' days')) .' + ' .rand(1, 6) . ' days' ));
-            $fecha_radicado = date('Y-m-d',strtotime(date('Y-m-d', strtotime($fecha_ini . '+ ' . $i+1 . ' days')) .' + ' .rand(1, 6) . ' days' ));
+            $fecha_radicado = date('Y-m-d', strtotime($fecha_generacion . '+ ' . 1 . ' days'));
             $estado_asignacion = rand(0, 1);
+            $fecha_respuesta = date('Y-m-d', strtotime($fecha_radicado . '- ' . rand(0, 5) . ' days'));
+            $tiempo_limite = rand(15, 20);
+            $fecha_respuesta = date('Y-m-d', strtotime($fecha_respuesta . '+ ' . $tiempo_limite . ' days'));
             if ($estado_asignacion) {
                 $estadospqr_id = 2;
             } else {
@@ -37,7 +40,7 @@ class Tabla_PQR_Peticiones_Hechos extends Seeder
             DB::table('pqr')->insert([
                 'id' => $i,
                 'radicado' => 'PQR-2023-' . $i,
-                'empleado_id' => '6',
+                'empleado_id' =>  6,
                 'persona_id' => '4',
                 'tipo_pqr_id' => $tipo_pqr_id,
                 'adquisicion' => 'Sede física',
@@ -52,8 +55,8 @@ class Tabla_PQR_Peticiones_Hechos extends Seeder
                 'prorroga_pdf' => 'NULL',
                 'fecha_generacion' => $fecha_generacion,
                 'fecha_radicado' => $fecha_radicado,
-                'fecha_respuesta' => 'NULL',
-                'tiempo_limite' => rand(15, 20),
+                'fecha_respuesta' => $fecha_respuesta,
+                'tiempo_limite' => $tiempo_limite,
                 'estado_asignacion' => $estado_asignacion,
                 'estadospqr_id' => $estadospqr_id,
                 'estado_creacion' => '1',

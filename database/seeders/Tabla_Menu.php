@@ -24,7 +24,7 @@ class Tabla_Menu extends Seeder
             ['nombre' =>  'Menú - Roles', 'menu_id' => '2', 'url' =>  'admin/_menus_rol', 'orden' => '3', 'icono' =>  'fas fa-chalkboard-teacher'],
             ['nombre' =>  'Permisos', 'menu_id' => '2', 'url' =>  'admin/permiso-index', 'orden' => '4', 'icono' =>  'fas fa-lock'],
             ['nombre' =>  'Permisos -Rol', 'menu_id' => '2', 'url' =>  'admin/_permiso-rol', 'orden' => '5', 'icono' =>  'fas fa-user-lock'],
-            ['nombre' =>  'Usuarios', 'menu_id' => '2', 'url' =>  '#', 'orden' => '6', 'icono' =>  'fas fa-user-friends'],
+            ['nombre' =>  'Usuarios', 'menu_id' => '2', 'url' =>  'admin/usuario-index', 'orden' => '6', 'icono' =>  'fas fa-user-friends'],
             ['nombre' =>  'Gestionar', 'menu_id' => '0', 'url' =>  '#', 'orden' => '7', 'icono' =>  'fas fa-chalkboard-teacher'],
             ['nombre' =>  'Listado PQR', 'menu_id' => '9', 'url' =>  'usuario/listado', 'orden' => '1', 'icono' =>  'far fa-list-alt'],
             ['nombre' =>  'Generar PQR', 'menu_id' => '9', 'url' =>  'usuario/generar', 'orden' => '3', 'icono' =>  'fas fa-plus-square'],
@@ -53,6 +53,7 @@ class Tabla_Menu extends Seeder
             ['nombre' =>  'Conf Cuenta Usuario', 'menu_id' => '0', 'url' =>  '#', 'orden' => '5', 'icono' =>  'fas fa-user-cog'],
             ['nombre' =>  'Gestionar PQR', 'menu_id' => '33', 'url' =>  'funcionario/gestion_pqr', 'orden' => '2', 'icono' =>  'fas fa-grip-horizontal'],
             ['nombre' =>  'Analítica', 'menu_id' => '0', 'url' =>  'analitica', 'orden' => '9', 'icono' =>  'fas fa-grip-horizontal'],
+            ['nombre' =>  'Wiku Parametros', 'menu_id' => '0', 'url' =>  'admin/funcionario/wiku/index', 'orden' => '9', 'icono' =>  'fas fa-grip-horizontal'],
             //----------------------------------------------------------------------------------------------------------------------
 
         ];

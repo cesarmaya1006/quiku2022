@@ -22,6 +22,8 @@ class Tabla_Roles extends Seeder
             'Coordinador',
             'Funcionario',
             'Usuario',
+            'Analitica',
+            'Wiku',
         ];
         foreach ($rols as $key => $value) {
             DB::table('roles')->insert([

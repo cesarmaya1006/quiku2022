@@ -22,127 +22,139 @@ $(document).ready(function() {
                     if ($('#subMotivoCheck').is(':checked')) {
                         var sub_motivo = '';
                         sub_motivo = $('#motivo_sub_id option:selected').text();
-                        titulo ="cantidad de PQR's por " + sub_motivo;
+                        titulo ="Cantidad de PQR's por " + sub_motivo;
                     }else if($('#motivoCheck').is(':checked')){
                         var motivo = '';
                         motivo = $('#motivo_id option:selected').text();
-                        titulo ="cantidad de PQR's por " + motivo;
+                        titulo ="Cantidad de PQR's por " + motivo;
                     }else if($('#tipopqrCheck').is(':checked')){
                         var tipo_p_q_r_id = '';
                         tipo_p_q_r_id = $('#tipo_p_q_r_id option:selected').text();
-                        titulo ="cantidad de PQR's por " + tipo_p_q_r_id;
+                        titulo ="Cantidad de PQR's por " + tipo_p_q_r_id;
                     }
                 }else if(esp_rango=='2'){
                     if ($('#referenciasCheck').is(':checked')) {
                         var text = '';
                         text = $('#referencia_id option:selected').text();
-                        titulo ="cantidad de PQR's por " + text;
+                        titulo ="Cantidad de PQR's por " + text;
                     }else if($('#marcasCheck').is(':checked')){
                         var text = '';
                         text = $('#marca_id option:selected').text();
-                        titulo ="cantidad de PQR's por " + text;
+                        titulo ="Cantidad de PQR's por " + text;
                     }else if($('#productosCheck').is(':checked')){
                         var text = '';
                         text = $('#producto_id option:selected').text();
-                        titulo ="cantidad de PQR's por " + text;
+                        titulo ="Cantidad de PQR's por " + text;
                     }else if($('#categoriasCheck').is(':checked')){
                         var text = '';
                         text = $('#categoria_id option:selected').text();
-                        titulo ="cantidad de PQR's por " + text;
+                        titulo ="Cantidad de PQR's por " + text;
                     }
                 }else if(esp_rango=='3'){
                     if ($('#empleadosCheck').is(':checked')) {
                         var text = '';
                         text = $('#empleado_id option:selected').text();
-                        titulo ="cantidad de PQR's por " + text;
+                        titulo ="Cantidad de PQR's por " + text;
                     }
                 }else if(esp_rango=='4'){
                     if ($('#subMotivoCheck').is(':checked')) {
                         if ($('#referenciasCheck').is(':checked')) {
                             var text = '';
                             text = $('#motivo_sub_id option:selected').text() + ' y' + $('#referencia_id option:selected').text();
-                            titulo ="cantidad de PQR's por " + text;
+                            titulo ="Cantidad de PQR's por " + text;
                         }else if($('#marcasCheck').is(':checked')){
                             var text = '';
                             text = $('#motivo_sub_id option:selected').text() + ' y' + $('#marca_id option:selected').text();
-                            titulo ="cantidad de PQR's por " + text;
+                            titulo ="Cantidad de PQR's por " + text;
                         }else if($('#productosCheck').is(':checked')){
                             var text = '';
                             text = $('#motivo_sub_id option:selected').text() + ' y' + $('#producto_id option:selected').text();
-                            titulo ="cantidad de PQR's por " + text;
+                            titulo ="Cantidad de PQR's por " + text;
                         }else if($('#categoriasCheck').is(':checked')){
                             var text = '';
                             text = $('#motivo_sub_id option:selected').text() + ' y' + $('#categoria_id option:selected').text();
-                            titulo ="cantidad de PQR's por " + text;
+                            titulo ="Cantidad de PQR's por " + text;
                         }
                     }else if($('#motivoCheck').is(':checked')){
                         if ($('#referenciasCheck').is(':checked')) {
                             var text = '';
                             text = $('#motivo_id option:selected').text() + ' y ' + $('#referencia_id option:selected').text();
-                            titulo ="cantidad de PQR's por " + text;
+                            titulo ="Cantidad de PQR's por " + text;
                         }else if($('#marcasCheck').is(':checked')){
                             var text = '';
                             text = $('#motivo_id option:selected').text() + ' y ' + $('#marca_id option:selected').text();
-                            titulo ="cantidad de PQR's por " + text;
+                            titulo ="Cantidad de PQR's por " + text;
                         }else if($('#productosCheck').is(':checked')){
                             var text = '';
                             text = $('#motivo_id option:selected').text() + ' y ' + $('#producto_id option:selected').text();
-                            titulo ="cantidad de PQR's por " + text;
+                            titulo ="Cantidad de PQR's por " + text;
                         }else if($('#categoriasCheck').is(':checked')){
                             var text = '';
                             text = $('#motivo_id option:selected').text() + ' y ' + $('#categoria_id option:selected').text();
-                            titulo ="cantidad de PQR's por " + text;
+                            titulo ="Cantidad de PQR's por " + text;
                         }
                     }else if($('#tipopqrCheck').is(':checked')){
                         if ($('#referenciasCheck').is(':checked')) {
                             var text = '';
                             text = $('#tipo_p_q_r_id option:selected').text() + ' y ' +$('#referencia_id option:selected').text();
-                            titulo ="cantidad de PQR's por " + text;
+                            titulo ="Cantidad de PQR's por " + text;
                         }else if($('#marcasCheck').is(':checked')){
                             var text = '';
                             text = $('#tipo_p_q_r_id option:selected').text() + ' y ' +$('#marca_id option:selected').text();
-                            titulo ="cantidad de PQR's por " + text;
+                            titulo ="Cantidad de PQR's por " + text;
                         }else if($('#productosCheck').is(':checked')){
                             var text = '';
                             text = $('#tipo_p_q_r_id option:selected').text() + ' y ' +$('#producto_id option:selected').text();
-                            titulo ="cantidad de PQR's por " + text;
+                            titulo ="Cantidad de PQR's por " + text;
                         }else if($('#categoriasCheck').is(':checked')){
                             var text = '';
                             text = $('#tipo_p_q_r_id option:selected').text() + ' y ' +$('#categoria_id option:selected').text();
-                            titulo ="cantidad de PQR's por " + text;
+                            titulo ="Cantidad de PQR's por " + text;
                         }
                     }
                 }else if(esp_rango=='5'){
                     if ($('#subMotivoCheck').is(':checked')) {
                         var sub_motivo = '';
                         sub_motivo = $('#motivo_sub_id option:selected').text() + ' y ' + $('#empleado_id option:selected').text();
-                        titulo ="cantidad de PQR's por " + sub_motivo;
+                        titulo ="Cantidad de PQR's por " + sub_motivo;
                     }else if($('#motivoCheck').is(':checked')){
                         var motivo = '';
                         motivo = $('#motivo_id option:selected').text() + ' y ' + $('#empleado_id option:selected').text();
-                        titulo ="cantidad de PQR's por " + motivo;
+                        titulo ="Cantidad de PQR's por " + motivo;
                     }else if($('#tipopqrCheck').is(':checked')){
                         var tipo_p_q_r_id = '';
                         tipo_p_q_r_id = $('#tipo_p_q_r_id option:selected').text() + ' y  empleado ' + $('#empleado_id option:selected').text();
-                        titulo ="cantidad de PQR's por " + tipo_p_q_r_id;
+                        titulo ="Cantidad de PQR's por " + tipo_p_q_r_id;
                     }
                 }else if(esp_rango=='6'){
                     if ($('#referenciasCheck').is(':checked')) {
                         var text = '';
                         text = $('#referencia_id option:selected').text() + ' y  empleado ' + $('#empleado_id option:selected').text();
-                        titulo ="cantidad de PQR's por " + text;
+                        titulo ="Cantidad de PQR's por " + text;
                     }else if($('#marcasCheck').is(':checked')){
                         var text = '';
                         text = $('#marca_id option:selected').text() + ' y  empleado ' + $('#empleado_id option:selected').text();
-                        titulo ="cantidad de PQR's por " + text;
+                        titulo ="Cantidad de PQR's por " + text;
                     }else if($('#productosCheck').is(':checked')){
                         var text = '';
                         text = $('#producto_id option:selected').text() + ' y  empleado ' + $('#empleado_id option:selected').text();
-                        titulo ="cantidad de PQR's por " + text;
+                        titulo ="Cantidad de PQR's por " + text;
                     }else if($('#categoriasCheck').is(':checked')){
                         var text = '';
                         text = $('#categoria_id option:selected').text() + ' y  empleado ' + $('#empleado_id option:selected').text();
-                        titulo ="cantidad de PQR's por " + text;
+                        titulo ="Cantidad de PQR's por " + text;
+                    }
+                }else if(esp_rango=='7'){
+                    if ($('#empleadosCheck').is(':checked')) {
+                        var text = '';
+                        text = $('#empleado_id option:selected').text();
+                        titulo ="Cantidad de PQR's por " + text;
+                    }
+                }else if(esp_rango=='8'){
+                    if ($('#empleadosCheck').is(':checked')) {
+                        var text = '';
+                        text = $('#empleado_id option:selected').text();
+                        titulo ="Tiempo de respuestaen dias a PQR's por " + text;
                     }
                 }
                 //---------------------------------------------------------------
@@ -382,8 +394,46 @@ $(document).ready(function() {
                 $("#empleadosCheck").prop('checked', true);
                 $('#empleadosCheck').attr('disabled',true);
                 $('#empleado_id').prop('required', true);
+                break;
+            case '7':
+                $('#caja_tiempo').removeClass('d-none');
+                $('#hr_caja_tiempo').removeClass('d-none');
+                $('#caja_area_conocimiento').addClass('d-none');
+                $('#hr_caja_area_conocimiento').addClass('d-none');
+                $('#caja_caracterizacion').addClass('d-none');
+                $('#hr_caja_caracterizacion').addClass('d-none');
+                $('#caja_empleados').removeClass('d-none');
+                $('#hr_caja_empleados').removeClass('d-none');
+                $('#anno_mes_2').attr('disabled',true);
+                $("#tipopqrCheck").prop('checked', false);
+                $("#tipopqrCheck").attr('disabled',false);
+                $("#categoriasCheck").prop('checked', false);
+                $("#categoriasCheck").attr('disabled',false);
 
+                $("#empleadosCheck").prop('checked', true);
+                $('#empleadosCheck').attr('disabled',true);
+                $('#empleados').removeClass('d-none');
+                $('#empleado_id').prop('required', true);
+                break;
+            case '8':
+                $('#caja_tiempo').removeClass('d-none');
+                $('#hr_caja_tiempo').removeClass('d-none');
+                $('#caja_area_conocimiento').addClass('d-none');
+                $('#hr_caja_area_conocimiento').addClass('d-none');
+                $('#caja_caracterizacion').addClass('d-none');
+                $('#hr_caja_caracterizacion').addClass('d-none');
+                $('#caja_empleados').removeClass('d-none');
+                $('#hr_caja_empleados').removeClass('d-none');
+                $('#anno_mes_2').attr('disabled',true);
+                $("#tipopqrCheck").prop('checked', false);
+                $("#tipopqrCheck").attr('disabled',false);
+                $("#categoriasCheck").prop('checked', false);
+                $("#categoriasCheck").attr('disabled',false);
 
+                $("#empleadosCheck").prop('checked', true);
+                $('#empleadosCheck').attr('disabled',true);
+                $('#empleados').removeClass('d-none');
+                $('#empleado_id').prop('required', true);
                 break;
         }
 

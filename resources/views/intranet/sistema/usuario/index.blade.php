@@ -1,4 +1,4 @@
-@extends("theme.back.plantilla")
+@extends('theme.back.plantilla')
 <!-- ************************************************************* -->
 <!-- titulo hoja -->
 @section('estilosHojas')
@@ -33,8 +33,17 @@
             </div>
             <br>
             <div class="box-body  card-primary">
-                @foreach ($roles as $rol)
-                    @if ($rol->usuarios->count() && $rol->id != 1 && $rol->id < 5)
+                @if (session('rol_id') <= 3)
+                    @php
+                        $roles_ = $roles;
+                    @endphp
+                @else
+                    @php
+                        $roles_ = $roles->where('id', '>', 2);
+                    @endphp
+                @endif
+                @foreach ($roles_ as $rol)
+                    @if ($rol->usuarios->count())
                         <div class="row d-flex justify-content-around">
                             <div class="col-12 mt-3 mb-2">
                                 <h3>{{ $rol->nombre }}</h3>
@@ -43,7 +52,10 @@
                                 <table class="table table-striped table-bordered table-hover display">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th class="text-center" scope="col">Id</th>
+                                            <th class="text-center" scope="col">Id {{ $rol->id }}</th>
+                                            @if (session('rol_id') < 4)
+                                                <th class="text-center" scope="col">Usuario</th>
+                                            @endif
                                             <th class="text-center" scope="col">N. Identificacion</th>
                                             <th class="text-center" scope="col">Nombres y Apellidos</th>
                                             <th class="text-center" scope="col">Email</th>
@@ -55,12 +67,35 @@
                                         @foreach ($rol->usuarios as $usuario)
                                             <tr>
                                                 <td class="text-center">{{ $usuario->id }}</td>
+                                                @if (session('rol_id') < 4)
+                                                    <td>{{$usuario->usuario}}</td>
+                                                @endif
                                                 <td class="text-center">
-                                                    {{ $usuario->tipos_docu->abreb_id . ' ' . $usuario->identificacion }}
+                                                    {{ $rol->id > 4 ? ($rol->id == 5 ? $usuario->empleado->tipos_docu->abreb_id . ' ' . $usuario->empleado->identificacion : $usuario->persona->tipos_docu->abreb_id . ' ' . $usuario->persona->identificacion) : '---' }}
                                                 </td>
-                                                <td>{{ $usuario->nombres . ' ' . $usuario->apellidos }}</td>
-                                                <td>{{ $usuario->email }}</td>
-                                                <td>{{ $usuario->telefono }}</td>
+                                                <td>
+                                                    {{ $rol->id > 4
+                                                        ? ($rol->id == 5
+                                                            ? $usuario->empleado->nombre1 .
+                                                                ' ' .
+                                                                $usuario->empleado->nombre2 .
+                                                                ' ' .
+                                                                $usuario->empleado->apellido1 .
+                                                                ' ' .
+                                                                $usuario->empleado->apellido2
+                                                            : $usuario->persona->nombre1 .
+                                                                ' ' .
+                                                                $usuario->persona->nombre2 .
+                                                                ' ' .
+                                                                $usuario->persona->apellido1 .
+                                                                ' ' .
+                                                                $usuario->persona->apellido2)
+                                                        : '---' }}
+                                                    {{ $usuario->nombres . ' ' . $usuario->apellidos }}</td>
+                                                <td>{{ $rol->id > 4 ? ($rol->id == 5 ? $usuario->empleado->email : $usuario->persona->email) : '---' }}
+                                                </td>
+                                                <td>{{ $rol->id > 4 ? ($rol->id == 5 ? $usuario->empleado->telefono_celu : $usuario->persona->telefono_celu) : '---' }}
+                                                </td>
                                                 <td class="text-center">
                                                     <a href="{{ route('admin-usuario-editar', ['id' => $usuario->id]) }}"
                                                         class="btn-accion-tabla tooltipsC" title="Editar este registro">
@@ -69,7 +104,7 @@
                                                     <form
                                                         action="{{ route('admin-usuario-eliminar', ['id' => $usuario->id]) }}"
                                                         class="d-inline form-eliminar" method="POST">
-                                                        @csrf @method("delete")
+                                                        @csrf @method('delete')
                                                         <button type="submit" class="btn-accion-tabla eliminar tooltipsC"
                                                             title="Eliminar este registro">
                                                             <i class="fa fa-fw fa-trash text-danger"></i>
@@ -82,7 +117,6 @@
                                 </table>
                             </div>
                         </div>
-                        <hr>
                     @endif
                 @endforeach
             </div>

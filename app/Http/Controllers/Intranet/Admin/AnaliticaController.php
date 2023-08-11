@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Intranet\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Empleados\Empleado;
+use App\Models\PQR\Estado;
 use App\Models\PQR\Motivo;
 use App\Models\PQR\PQR;
 use App\Models\PQR\SubMotivo;
@@ -104,6 +105,7 @@ class AnaliticaController extends Controller
             ['y'=>$cant_diciembreo,'label'=> $meses[11]],
 
         ];
+        $data = $data_mes;
         return view('intranet.funcionarios.analitica.index',compact('tipospqr','data','data_mes'));
     }
     public function index2()
@@ -1211,6 +1213,57 @@ class AnaliticaController extends Controller
                         ['y'=>$cant_octubre,'label'=> $meses[9]],
                         ['y'=>$cant_noviembre,'label'=> $meses[10]],
                         ['y'=>$cant_diciembreo,'label'=> $meses[11]]
+
+                    ];
+                    return response()->json(['data_mes' => $data_mes]);
+                    break;
+                case '7':
+                    $empleado_id = $request['empleado_id'];
+                    if ($empleado_id != null) {
+                        $estados = Estado::whereHas('pqrs', function ($q) use ($anno_busqueda,$empleado_id) {
+                            $q->whereYear('fecha_generacion', $anno_busqueda)->where('empleado_id',$empleado_id);
+                        })->get();
+                    }
+                    foreach ($estados as $estado) {
+                        $data_mes[]= ['y'=>$estado->pqrs->count(),'label'=> $estado->estado_funcionario];
+                    }
+                    //dd($pqr_s->toArray());
+
+                    return response()->json(['data_mes' => $data_mes]);
+                    break;
+                case '8':
+                    $empleado_id = $request['empleado_id'];
+                    if ($empleado_id != null) {
+                        $prom_meses =[];
+                        for ($i=1; $i < 13; $i++) {
+                            $pqr_s = PQR::whereYear('fecha_generacion', $anno_busqueda)->whereMonth('fecha_radicado',$i)->where('empleado_id',$empleado_id)->get();
+                            foreach ($pqr_s as $pqr) {
+                                $formatted_dt1=Carbon::parse($pqr->fecha_radicado);
+                                $formatted_dt2=Carbon::parse($pqr->fecha_respuesta);
+                                $pqr['cantidadDias'] =$formatted_dt1->diffInDays($formatted_dt2);
+                            }
+                            if ($pqr_s->avg('cantidadDias') != null) {
+                                $prom_meses[]= round($pqr_s->avg('cantidadDias'));
+                            }else{
+                                $prom_meses[]= 0;
+                            }
+
+                        }
+
+                    }
+                    $data_mes = [
+                        ['y'=>$prom_meses[0],'label'=> $meses[0]],
+                        ['y'=>$prom_meses[1],'label'=> $meses[1]],
+                        ['y'=>$prom_meses[2],'label'=> $meses[2]],
+                        ['y'=>$prom_meses[3],'label'=> $meses[3]],
+                        ['y'=>$prom_meses[4],'label'=> $meses[4]],
+                        ['y'=>$prom_meses[5],'label'=> $meses[5]],
+                        ['y'=>$prom_meses[6],'label'=> $meses[6]],
+                        ['y'=>$prom_meses[7],'label'=> $meses[7]],
+                        ['y'=>$prom_meses[8],'label'=> $meses[8]],
+                        ['y'=>$prom_meses[9],'label'=> $meses[9]],
+                        ['y'=>$prom_meses[10],'label'=> $meses[10]],
+                        ['y'=>$prom_meses[11],'label'=> $meses[11]]
 
                     ];
                     return response()->json(['data_mes' => $data_mes]);

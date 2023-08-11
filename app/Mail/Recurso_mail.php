@@ -29,6 +29,6 @@ class Recurso_mail extends Mailable
      */
     public function build()
     {
-        return $this->from('contacto@quiku.com')->view('intranet.emails.constancia_recurso_mail')->with(['id_recurso' => $this->id_recurso,]);
+        return $this->from('quiku2023@hotmail.com')->view('intranet.emails.constancia_recurso_mail')->with(['id_recurso' => $this->id_recurso,]);
     }
 }

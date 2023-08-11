@@ -27,6 +27,6 @@ class PruebaCron extends Mailable
      */
     public function build()
     {
-        return $this->from('contacto@quiku.com')->view('intranet.emails.prueba');
+        return $this->from('quiku2023@hotmail.com')->view('intranet.emails.prueba');
     }
 }

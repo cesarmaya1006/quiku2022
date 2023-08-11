@@ -29,6 +29,6 @@ class Prorroga extends Mailable
      */
     public function build()
     {
-        return $this->from('contacto@quiku.com')->view('intranet.emails.prorroga_email')->with(['id_pqr' => $this->id_pqr,]);
+        return $this->from('quiku2023@hotmail.com')->view('intranet.emails.prorroga_email')->with(['id_pqr' => $this->id_pqr,]);
     }
 }

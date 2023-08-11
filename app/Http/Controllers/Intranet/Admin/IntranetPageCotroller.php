@@ -10,6 +10,9 @@ use App\Models\Admin\Usuario;
 use App\Models\PQR\AsignacionTarea;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ValidarPassword;
+use App\Models\Admin\Rol;
+use App\Models\Empleados\Empleado;
+use App\Models\PQR\Estado;
 
 class IntranetPageCotroller extends Controller
 {
@@ -48,8 +51,51 @@ class IntranetPageCotroller extends Controller
             $pqrs = PQR::get();
         }
         $peticiones = Peticion::where('empleado_id', session('id_usuario'))->where('estado_id', '<', 11 )->get();
-
-        return view('intranet.index.index', compact('pqrs', 'usuario', 'tipoPQR', 'tareas', 'peticiones'));
+        $estadospqr = Estado::get();
+        foreach ($estadospqr as $estado) {
+            switch ($estado->id) {
+                case '1':
+                    $estado['bg'] = 'bg-info';
+                    break;
+                case '2':
+                    $estado['bg'] = 'bg-primary';
+                    break;
+                case '3':
+                    $estado['bg'] = 'bg-warning';
+                    break;
+                case '4':
+                    $estado['bg'] = 'bg-danger';
+                    break;
+                case '5':
+                    $estado['bg'] = 'bg-secondary';
+                    break;
+                case '6':
+                    $estado['bg'] = 'bg-success';
+                    break;
+                case '7':
+                    $estado['bg'] = 'bg-info';
+                    break;
+                case '8':
+                    $estado['bg'] = 'bg-primary';
+                    break;
+                case '9':
+                    $estado['bg'] = 'bg-success';
+                    break;
+                default:
+                    $estado['bg'] = 'bg-success';
+                    break;
+            }
+        }
+        $empleados_find = Empleado::get();
+        foreach ($empleados_find as $empleado) {
+            $empleado['cantidad'] = $empleado->pqrs->whereNotIn('estadospqr_id',[6, 9, 10])->count();
+        }
+        $empleados = $empleados_find->sortBy('cantidad')->reverse()->take(10);
+        foreach ($empleados as $empleado) {
+            $dataPoints[] = ['y'=>$empleado->cantidad,'label'=> $empleado->nombre1 . ' ' . $empleado->apellido1];
+        }
+        $roles = Rol::get();
+        return view('intranet.index.index', compact('pqrs', 'usuario', 'tipoPQR', 'tareas', 'peticiones','estadospqr','empleados','dataPoints','roles'));
     }
 
     public function restablecer_password(ValidarPassword $request)

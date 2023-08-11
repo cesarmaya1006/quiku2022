@@ -33,6 +33,11 @@
         </div>
         <div class="card-body pb-3">
             <div class="container-fluid">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h3>Cantidad de PQRs por tipo</h3>
+                    </div>
+                </div>
                 <div class="row">
                     @foreach ($tipospqr as $tipopqr)
                     <div class="col-lg-3 col-6">

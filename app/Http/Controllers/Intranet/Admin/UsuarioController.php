@@ -20,7 +20,14 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $roles = Rol::get();
+        $roles = Rol::with('usuarios')->with('usuarios.empleado')->with('usuarios.empleado.tipos_docu')->get();
+        /*foreach ($roles as $rol) {
+            if ($rol->id > 3 ) {                                         m,,,,,,
+                foreach ($rol->usuarios as $usuario) {
+                    dd($usuario->empleado->tipos_docu->toArray());
+                }
+            }
+        }*/
         return view('intranet.sistema.usuario.index', compact('roles'));
     }
 
@@ -32,7 +39,7 @@ class UsuarioController extends Controller
     public function crear()
     {
         $tiposdocu = Tipo_Docu::orderBy('id')->get();
-        $roles = Rol::whereIn('id', [2, 3, 4])->orderBy('id')->pluck('nombre', 'id')->toArray();
+        $roles = Rol::where('id', '>' , 1)->orderBy('id')->pluck('nombre', 'id')->toArray();
         return view('intranet.sistema.usuario.crear', compact('roles', 'tiposdocu'));
     }
 

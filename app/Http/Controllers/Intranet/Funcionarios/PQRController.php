@@ -1170,6 +1170,8 @@ class PQRController extends Controller
                     }
                 } else {
                     $pqrEstado['estadospqr_id'] = 6;
+                    $pqrEstado['fecha_respuesta'] = date('Y-m-d');
+
                 }
                 PQR::findOrFail($pqr->id)->update($pqrEstado);
             }
